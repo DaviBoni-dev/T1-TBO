@@ -1,17 +1,14 @@
-#ifndef UF_C
-#define UF_C
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include "UF.h"
 
-typedef struct uf {
+struct uf {
     int *id;
     int *sz;
     int count;
-} UF;
-
+} ;
 
 
 UF *UF_init(int N) {
@@ -64,5 +61,3 @@ void UF_print(UF *uf){
         printf("%d\n", uf->id[i]);
     }
 }
-
-#endif

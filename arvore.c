@@ -5,6 +5,7 @@
 
  struct arv {
     int valor;
+    int peso;
     Arv **filhos;
     int numFilhos;
  };
@@ -13,13 +14,17 @@
 struct forest{
     Arv **raizes;
     int num;
+    int *pais;
+
 };
 
 Forest *criaForest(int n){
     Forest *f = (Forest *) malloc (sizeof(Forest));
     f->raizes = (Arv **) malloc (n * sizeof(Arv*));
+    f->pais = (int *) malloc (n * sizeof(int));
     for(int i = 0; i < n; i++){
         f->raizes[i] = (Arv *) malloc (sizeof(Arv));
+        f->pais[i] = 1;
     }
     f->num = n;
 
@@ -40,6 +45,7 @@ Arv* arv_cria (int c, Arv* e, Arv* d, int maxF){
     Arv* arvore = (Arv *) malloc (sizeof(Arv));
     arvore->valor = c;
     arvore->numFilhos = 0;
+    arvore->peso = 0;
     arvore->filhos = (Arv **) malloc(maxF * sizeof(Arv*));
     for(int i = 0; i < maxF; i++){
         arvore->filhos[i] = NULL;
@@ -59,7 +65,7 @@ void forest_imprime(Forest *f){
 void forest_imprime(Forest *f) {
     printf("=== Status da Floresta ===\n");
     for (int i = 0; i < f->num; i++) {
-        if (f->raizes[i] != NULL) {
+        if (f->raizes[i] != NULL && f->pais[i]) {
             printf("\n[Árvore %d]\n", i + 1);
             arv_imprime_visual(f->raizes[i], 0); // Começa no nível 0
         }
@@ -101,7 +107,7 @@ void arv_imprime_visual(Arv* a, int nivel) {
     }
 
     // 3. Imprime o valor do nó e quebra a linha
-    printf("%d\n", a->valor);
+    printf("%c\n", a->valor + 65);
 
     // 4. Chama a recursão para os filhos aumentando o nível
     for (int i = 0; i < a->numFilhos; i++) {
@@ -113,6 +119,7 @@ void arv_adiciona(int src, int dst, Forest *f){
     Arv *arv_dest = f->raizes[dst];
     f->raizes[dst]->filhos[f->raizes[dst]->numFilhos] = f->raizes[src];
     f->raizes[dst]->numFilhos++;
+    f->pais[src] = 0;
 }
 
 /*

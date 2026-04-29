@@ -1,19 +1,17 @@
-#ifndef PONTO_C
-#define PONTO_C
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include "ponto.h"
 
-typedef struct ponto  {
+struct ponto  {
     float *valores;
     int tamValoresPreenchidos;
     int tamValoresTotal;
     int m;
     char *idUnico;
     int tamId;
-} Ponto;
+};
 
 Ponto *criaPonto(){
     Ponto *ponto = (Ponto *) malloc (sizeof(Ponto));
@@ -104,4 +102,3 @@ void liberaVetorPontos(Ponto **pontos, int n){
     free(pontos);
 }
 
-#endif
