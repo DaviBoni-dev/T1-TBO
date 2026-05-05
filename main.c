@@ -80,7 +80,9 @@ int main(int argc, char *argv[]){
 
     //forest_imprime(forest);
 
-     for(int i = 0; i < n_pontos - (k - 1); i++){
+    int arestasAdicionadas = 0;
+
+     for(int i = 0; i < totalArestas; i++){
         Aresta *atual = arestas[i];
         int src = getOrigemAresta(atual);
         int dst = getDestinoAresta(atual);
@@ -88,15 +90,21 @@ int main(int argc, char *argv[]){
         if(UF_find(uf,getOrigemAresta(atual)) != UF_find(uf, getDestinoAresta(atual))){
             //arv_adiciona(src, dst, forest);
             addArestaNaArvore(atual, arvore);
+            arestasAdicionadas++;
+
             UF_union(uf,getOrigemAresta(atual), getDestinoAresta(atual));
+
+            if(arestasAdicionadas >= (n_pontos - k)){
+                break;
+            }
         }
     }
 
-    //imprimir_arvore_debug(arvore, n_pontos, pontos);
 
     int contador_grupos = 0;
     Grupo **grupos = criaVetorGrupo(n_pontos);
     percorreArvore(arvore, n_pontos, pontos, grupos, &contador_grupos);
+    ordenaGrupos(grupos, contador_grupos);
     imprimeVetorGrupos(grupos, contador_grupos);
     printf("N° de grupos: %d\n", contador_grupos);
     

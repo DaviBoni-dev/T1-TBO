@@ -11,7 +11,7 @@ struct noarvore {
 };
 
 NoArvore **criaVetorArvores(int n){
-    NoArvore **arvore = (NoArvore **) malloc (n * sizeof(NoArvore*));
+    NoArvore **arvore = (NoArvore **) calloc (n, sizeof(NoArvore*));
 
     return arvore;
 }

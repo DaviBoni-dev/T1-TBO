@@ -1,4 +1,5 @@
 #include "grupo.h"
+#include <string.h>
 
 struct grupo {
     int *elementos;
@@ -24,6 +25,17 @@ Grupo **criaVetorGrupo(int n){
     }
 
     return g;
+}
+
+int comparaGrupo(const void* a, const void *b){
+    char *a1 = *(char**) a;
+    char *b1 = *(char**) b;
+
+   return strcmp(a1, b1);
+}
+
+char **getIdElementosGrupo(Grupo *g){
+    return g->idElementos;
 }
 
 void adicionaElementoGrupo(Grupo *g, int elemento, char *id){
@@ -63,6 +75,16 @@ void imprimeGrupo(Grupo *g){
 void imprimeVetorGrupos(Grupo **g, int n){
     for(int i = 0; i < n; i++){
         imprimeGrupo(g[i]);
+    }
+}
+
+int getQtdElementosGrupo(Grupo *g){
+    return g->qtd_elementos;
+}
+
+void ordenaGrupos(Grupo **g, int n){
+    for(int i = 0; i < n; i++){
+        qsort(g[i]->idElementos ,g[i]->qtd_elementos ,sizeof(char*), comparaGrupo);
     }
 }
 
