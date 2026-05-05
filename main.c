@@ -3,7 +3,6 @@
 #include <string.h>
 #include "ponto.h"
 #include "UF.h"
-#include "arvore.h"
 #include "aresta.h"
 #include "matriz.h"
 #include "MST.h"
@@ -20,6 +19,7 @@ int main(int argc, char *argv[]){
 
     Ponto **pontos = criaVetorPontos();
 
+    free(arqEntrada);
     
     char *linha = NULL;
     size_t tam = 0;
@@ -58,7 +58,6 @@ int main(int argc, char *argv[]){
     
     float **matrizDistancias = criaMatriz(n_pontos);
     preencheMatrizComDistancias(matrizDistancias, n_pontos, pontos);
-    //imprimeMatriz(matrizDistancias, n_pontos);
 
 
     int totalArestas = (n_pontos * (n_pontos - 1)) / 2;
@@ -70,15 +69,7 @@ int main(int argc, char *argv[]){
     ordenaArestas(arestas, totalArestas);
 
     UF *uf = UF_init(n_pontos);
-    //Forest *forest = criaForest(n_pontos);
     NoArvore **arvore = criaVetorArvores(n_pontos);
-
-    for(int i = 0; i < n_pontos; i++){
-        Arv *a = arv_cria(i, NULL, NULL, n_pontos);
-        //adicionaRaizForest(forest,  a, i);
-    }
-
-    //forest_imprime(forest);
 
     int arestasAdicionadas = 0;
 
@@ -88,7 +79,6 @@ int main(int argc, char *argv[]){
         int dst = getDestinoAresta(atual);
 
         if(UF_find(uf,getOrigemAresta(atual)) != UF_find(uf, getDestinoAresta(atual))){
-            //arv_adiciona(src, dst, forest);
             addArestaNaArvore(atual, arvore);
             arestasAdicionadas++;
 
@@ -108,16 +98,14 @@ int main(int argc, char *argv[]){
     imprimeVetorGrupos(grupos, contador_grupos);
     printf("N° de grupos: %d\n", contador_grupos);
     
-    //forest_imprime(forest);
-
-
-
-    //liberaMatriz(matrizDistancias, n_pontos);
-
+    liberaMatriz(matrizDistancias, n_pontos);
     free(linha);
-    //fclose(entrada);
+    liberaVetorPontos(pontos, tam_max_vetor);
+    liberaVetorArestas(arestas, totalArestas);
+    liberaVetorGrupos(grupos, n_pontos);
+    liberaVetorArvores(arvore, n_pontos);
 
-    //liberaVetorPontos(pontos, n_pontos);
+    UF_destroy(uf);
 
     return 0;
 

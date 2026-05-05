@@ -20,11 +20,31 @@ Grupo *criaGrupo(){
 
 Grupo **criaVetorGrupo(int n){
     Grupo **g = (Grupo **) malloc (n * sizeof(Grupo *));
+    
     for(int i = 0; i < n; i++){
         g[i] = criaGrupo();
     }
 
     return g;
+}
+
+void liberaGrupo(Grupo*g){
+    if(g != NULL){
+        for(int i = 0; i < g->qtd_elementos; i++){
+            free(g->idElementos[i]);
+        }
+        free(g->idElementos);
+        free(g->elementos);
+        free(g);
+    }
+}
+
+void liberaVetorGrupos(Grupo **g, int n){
+    for(int i = 0; i < n; i++){
+        liberaGrupo(g[i]);
+    }
+
+    free(g);
 }
 
 int comparaGrupo(const void* a, const void *b){

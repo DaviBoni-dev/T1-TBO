@@ -17,5 +17,7 @@ void imprimeGrupo(Grupo *g);
 void imprimeVetorGrupos(Grupo **g, int n);
 int getQtdElementosGrupo(Grupo *g);
 void ordenaGrupos(Grupo **g, int n);
+void liberaGrupo(Grupo*g);
+void liberaVetorGrupos(Grupo **g, int n);
 
 #endif /* A7F48332_2C2B_4771_81FA_A0CE652E6AB2 */

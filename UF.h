@@ -54,6 +54,8 @@ void UF_union(UF *uf, int p, int q);
 void UF_print(UF *uf);
 
 
+void UF_destroy(UF *uf);
+
 
 
 #endif /* UF_H */

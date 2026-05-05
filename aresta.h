@@ -13,5 +13,8 @@ void ordenaArestas(Aresta **arestas, int total);
 int getOrigemAresta(Aresta *a);
 int getDestinoAresta(Aresta *a);
 float getPesoAresta(Aresta *a);
+void liberaAresta(Aresta *a);
+
+void liberaVetorArestas(Aresta **a, int n);
 
 #endif /* ARESTA_H */

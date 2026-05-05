@@ -33,6 +33,19 @@ float getPesoAresta(Aresta *a){
     return a->peso;
 }
 
+void liberaAresta(Aresta *a){
+    if(a != NULL)
+        free(a);
+}
+
+void liberaVetorArestas(Aresta **a, int n){
+    for(int i = 0; i < n; i++){
+        liberaAresta(a[i]);
+    }
+
+    free(a);
+}
+
 void preencheVetorComDistancias(Aresta **arestas, float **matriz, int contador){
     int f = 0;
     for(int i = 0; i < contador; i++){

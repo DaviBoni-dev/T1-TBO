@@ -39,6 +39,16 @@ int connected(UF *uf, int p, int q){
     return (UF_find(uf, p) == UF_find(uf, q));
 }
 
+void UF_destroy(UF *uf){
+    
+    if(uf != NULL){
+        free(uf->id);
+        free(uf->sz);
+        free(uf);
+    }
+
+}
+
 void UF_union(UF *uf, int p, int q) {
     int i = UF_find(uf, p); 
     int j = UF_find(uf, q); 

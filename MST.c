@@ -42,6 +42,27 @@ void percorreArvore(NoArvore **arvore, int n_pontos, Ponto **pontos, Grupo **gru
             (*contador_grupo)++;
         }
     }
+
+    free(verificador);
+}
+
+void liberaVetorArvores(NoArvore **arvore, int n) {
+    if (arvore == NULL) {
+        return; 
+    }
+
+    for (int i = 0; i < n; i++) {
+        NoArvore *atual = arvore[i];
+        
+
+        while (atual != NULL) {
+            NoArvore *proximo = atual->vizinho; 
+            free(atual);         
+            atual = proximo;     
+        }
+    }
+
+    free(arvore);
 }
 
 // Função recursiva da Busca em Profundidade

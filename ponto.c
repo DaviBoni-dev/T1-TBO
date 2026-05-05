@@ -19,6 +19,7 @@ Ponto *criaPonto(){
     ponto->m = 0;
     ponto->tamValoresTotal = 10;
     ponto->tamValoresPreenchidos = 0;
+    ponto->idUnico = NULL;
     return ponto;
 }
 

@@ -21,7 +21,7 @@ void imprimeMatriz(float **m, int n){
 
 void preencheMatrizComDistancias(float **m, int n, Ponto **pontos){
         for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
+            for(int j = i + 1; j < n; j++){
                 m[i][j] = calculaDistanciaEuclidiana(pontos[i], pontos[j]);
             }
     }
