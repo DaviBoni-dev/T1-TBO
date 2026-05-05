@@ -40,7 +40,7 @@ float calculaDistanciaEuclidiana(Ponto *p1, Ponto *p2){
         total += pow(diferenca, 2);
     }
 
-    return sqrt(total);
+    return total; //Como só queremos ordenar, não importa a raiz ou o valor quadratico
 }
 
 

@@ -1,0 +1,10 @@
+4.txt - versao inicial
+
+Tempo de leitura: 0.0048 segundos
+Tempo de cálculo das distâncias: 0.4730 segundos
+Tempo de preenchimento do vetor de arestas: 0.1185 segundos
+Tempo de ordenação das arestas: 1.1583 segundos
+Tempo de execução do algoritmo de Kruskal: 0.0228 segundos
+Tempo de percurso da árvore para formar os grupos: 0.0009 segundos
+Tempo de ordenação dos grupos: 0.0005 segundos
+

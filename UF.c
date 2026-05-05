@@ -31,7 +31,11 @@ int fcount(UF *uf){
 }
 
 int UF_find(UF *uf, int i) {
-    while (i != uf->id[i]) i = uf->id[i];
+    while (i != uf->id[i]){   
+        uf->id[i] = uf->id[uf->id[i]];
+        i = uf->id[i];    
+    }
+        
     return i; 
 }
 
