@@ -22,6 +22,10 @@ Ponto *criaPonto(){
     return ponto;
 }
 
+char *getIdUnico(Ponto *p){
+    return p->idUnico;
+}
+
 void adicionaIdPonto(Ponto *p, char *id){
 
     p->idUnico = strdup(id);
@@ -69,13 +73,30 @@ Ponto **criaVetorPontos(){
     return pontos;
 }
 
-void liberaPonto(Ponto *p){
-    if(p->idUnico != NULL)
-    free(p->idUnico);
-    if(p->valores != NULL)
-    free(p->valores);
+Ponto **realocaVetorPontos(Ponto **p, int n){
+    Ponto **temp = (Ponto **) realloc (p, n * (sizeof(Ponto*)));
 
-    free(p);
+    if(temp != NULL){
+        return temp;
+    }
+    else{
+        printf("Não foi possível alocar memória para o número total de pontos\n");
+        exit(0);
+        return p;
+    }
+
+}
+
+void liberaPonto(Ponto *p){
+    if(p != NULL){
+        if(p->idUnico != NULL)
+        free(p->idUnico);
+        if(p->valores != NULL)
+        free(p->valores);
+
+
+        free(p);
+    }
 }
 
 void imprimePonto(Ponto *p){

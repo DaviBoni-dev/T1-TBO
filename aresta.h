@@ -12,5 +12,6 @@ void preencheVetorComDistancias(Aresta **arestas, float **matriz, int contador);
 void ordenaArestas(Aresta **arestas, int total);
 int getOrigemAresta(Aresta *a);
 int getDestinoAresta(Aresta *a);
+float getPesoAresta(Aresta *a);
 
 #endif /* ARESTA_H */

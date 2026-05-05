@@ -6,86 +6,110 @@
 #include "arvore.h"
 #include "aresta.h"
 #include "matriz.h"
+#include "MST.h"
 #include <math.h>
 
 
 
 int main(int argc, char *argv[]){
 
-    FILE *entrada = fopen("entrada.txt", "r");
+    char *arqEntrada = strdup(argv[1]);
+
+    FILE *entrada = fopen(arqEntrada, "r");
+    int k = atoi(argv[2]);
 
     Ponto **pontos = criaVetorPontos();
 
     
     char *linha = NULL;
     size_t tam = 0;
-    int contador = 0;
+    int n_pontos = 0;
+    int tam_max_vetor = 10;
+    
     
     while(getline(&linha, &tam, entrada) != -1){
+
+        if(n_pontos >= tam_max_vetor){
+            tam_max_vetor *= 2;
+
+            pontos = realocaVetorPontos(pontos, tam_max_vetor);
+            for(int i = n_pontos; i < tam_max_vetor; i++){
+                pontos[i] = criaPonto();
+            }
+        }
         
         char *token = strtok(linha, ",");
-        adicionaIdPonto(pontos[contador], token);
+        adicionaIdPonto(pontos[n_pontos], token);
         
         while(token != NULL){
             //printf("%s\n", token);
             token = strtok(NULL, ",");
             if(token != NULL){
                 float valor = atof(token);
-                adicionaValorPonto(pontos[contador], valor);
+                adicionaValorPonto(pontos[n_pontos], valor);
                 
             }
         }
         
-        contador++;
+        n_pontos++;
     }
+
+    fclose(entrada);
     
-    float **matrizDistancias = criaMatriz(contador);
-    preencheMatrizComDistancias(matrizDistancias, contador, pontos);
-    //imprimeMatriz(matrizDistancias, contador);
+    float **matrizDistancias = criaMatriz(n_pontos);
+    preencheMatrizComDistancias(matrizDistancias, n_pontos, pontos);
+    //imprimeMatriz(matrizDistancias, n_pontos);
 
 
-    int totalArestas = (contador * (contador - 1)) / 2;
+    int totalArestas = (n_pontos * (n_pontos - 1)) / 2;
 
     Aresta **arestas = criaVetorArestas(totalArestas);
-    preencheVetorComDistancias(arestas, matrizDistancias, contador);
+    preencheVetorComDistancias(arestas, matrizDistancias, n_pontos);
 
 
     ordenaArestas(arestas, totalArestas);
 
-    UF *uf = UF_init(contador);
-    Forest *forest = criaForest(contador);
+    UF *uf = UF_init(n_pontos);
+    //Forest *forest = criaForest(n_pontos);
+    NoArvore **arvore = criaVetorArvores(n_pontos);
 
-    for(int i = 0; i < contador; i++){
-        Arv *a = arv_cria(i, NULL, NULL, contador);
-        adicionaRaizForest(forest,  a, i);
+    for(int i = 0; i < n_pontos; i++){
+        Arv *a = arv_cria(i, NULL, NULL, n_pontos);
+        //adicionaRaizForest(forest,  a, i);
     }
 
-    forest_imprime(forest);
+    //forest_imprime(forest);
 
-     for(int i = 0; i < totalArestas; i++){
+     for(int i = 0; i < n_pontos - (k - 1); i++){
         Aresta *atual = arestas[i];
         int src = getOrigemAresta(atual);
         int dst = getDestinoAresta(atual);
 
         if(UF_find(uf,getOrigemAresta(atual)) != UF_find(uf, getDestinoAresta(atual))){
-            arv_adiciona(src, dst, forest);
+            //arv_adiciona(src, dst, forest);
+            addArestaNaArvore(atual, arvore);
             UF_union(uf,getOrigemAresta(atual), getDestinoAresta(atual));
         }
     }
 
-    printf("\n\n\n");
-    forest_imprime(forest);
-    printf("\n\n\n");
+    //imprimir_arvore_debug(arvore, n_pontos, pontos);
+
+    int contador_grupos = 0;
+    Grupo **grupos = criaVetorGrupo(n_pontos);
+    percorreArvore(arvore, n_pontos, pontos, grupos, &contador_grupos);
+    imprimeVetorGrupos(grupos, contador_grupos);
+    printf("N° de grupos: %d\n", contador_grupos);
+    
+    //forest_imprime(forest);
 
 
-    //UF_print(uf);
 
-    liberaMatriz(matrizDistancias, contador);
+    //liberaMatriz(matrizDistancias, n_pontos);
 
     free(linha);
-    fclose(entrada);
+    //fclose(entrada);
 
-    liberaVetorPontos(pontos, contador);
+    //liberaVetorPontos(pontos, n_pontos);
 
     return 0;
 

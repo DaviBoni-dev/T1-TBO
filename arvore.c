@@ -90,6 +90,7 @@ void arv_imprime (Arv* a){
     printf(" >\n");
 }
 
+
 // Função auxiliar que carrega o nível atual da recursão
 void arv_imprime_visual(Arv* a, int nivel) {
     if (a == NULL) {

@@ -19,6 +19,9 @@ Ponto *criaPonto();
  */
 void adicionaIdPonto(Ponto *p, char *id);
 
+char *getIdUnico(Ponto *p);
+
+Ponto **realocaVetorPontos(Ponto **p, int n);
 /**
  * @brief 
  * 
