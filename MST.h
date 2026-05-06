@@ -5,6 +5,7 @@
 #include "ponto.h"
 #include "grupo.h"
 
+
 /** @brief Estrutura que representa um nó na árvore.
  */
 typedef struct noarvore NoArvore;
@@ -13,13 +14,18 @@ typedef struct noarvore NoArvore;
  * @param n Número de nós na árvore.
  * @return NoArvore** - Ponteiro para o vetor de nós de árvore criado.
  */
-NoArvore **criaVetorArvores(int n);
+NoArvore **criaVetorArvores(int n, int max_nos);
+
+NoArvore *criaNoArvore(int n);
 
 /** @brief Adiciona uma aresta a uma árvore.
  * @param a Ponteiro para a aresta a ser adicionada.
  * @param arvore Ponteiro para o vetor de nós de árvore.
  */
-void addArestaNaArvore(Aresta *a, NoArvore **arvore);
+void addArestaNaArvore(Aresta *a, NoArvore **arvore, int *contador_arvore);
+
+void addArestaNaArvoreComPiscina(Aresta *a, NoArvore **arvore, NoArvore *pool, int *contador_pool);
+
 
 /** @brief Imprime os dados de uma árvore para depuração.
  * @param arvore Ponteiro para o vetor de nós de árvore.

@@ -85,8 +85,12 @@ int main(int argc, char *argv[]){
     fim = clock();
     double tempo_ordena_arestas = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
 
+    int max_nos = n_pontos * 2;
+    int contadorArvore = 0;
+
     UF *uf = UF_init(n_pontos);
-    NoArvore **arvore = criaVetorArvores(n_pontos);
+    NoArvore **arvore = criaVetorArvores(n_pontos, max_nos);
+    NoArvore *piscina_nos = criaNoArvore(max_nos);
 
     int arestasAdicionadas = 0;
 
@@ -97,7 +101,11 @@ int main(int argc, char *argv[]){
         int dst = getDestinoAresta(atual);
 
         if(UF_find(uf,getOrigemAresta(atual)) != UF_find(uf, getDestinoAresta(atual))){
-            addArestaNaArvore(atual, arvore);
+            //addArestaNaArvore(atual, arvore, &contadorArvore);
+
+            addArestaNaArvoreComPiscina(atual, arvore, piscina_nos, &contadorArvore);
+
+
             arestasAdicionadas++;
 
             UF_union(uf,getOrigemAresta(atual), getDestinoAresta(atual));
@@ -148,7 +156,9 @@ int main(int argc, char *argv[]){
     liberaVetorPontos(pontos, tam_max_vetor);
     liberaVetorArestas(arestas, totalArestas);
     liberaVetorGrupos(grupos, n_pontos);
-    liberaVetorArvores(arvore, n_pontos);
+    //liberaVetorArvores(arvore, n_pontos);
+    free(arvore);
+    free(piscina_nos);
 
     UF_destroy(uf);
     fclose(saida);

@@ -10,20 +10,51 @@ struct noarvore {
     NoArvore *vizinho;
 };
 
-NoArvore **criaVetorArvores(int n){
+NoArvore **criaVetorArvores(int n, int max_nos){
     NoArvore **arvore = (NoArvore **) calloc (n, sizeof(NoArvore*));
-
+/*
+        for(int i = 0; i < max_nos; i++){
+            arvore[i] = (NoArvore *) malloc (sizeof(NoArvore));
+        }
+*/
     return arvore;
 }
 
-void addArestaNaArvore(Aresta *a, NoArvore **arvore){
-    NoArvore *noB = (NoArvore *) malloc (sizeof(NoArvore));
+NoArvore *criaNoArvore(int n){
+    NoArvore *no = (NoArvore *) malloc (n * sizeof(NoArvore));
+    no->vizinho = NULL;
+    return no;
+}
+
+void addArestaNaArvore(Aresta *a, NoArvore **arvore, int *contador_arvore){
+    //NoArvore *noB = (NoArvore *) malloc (sizeof(NoArvore));
+
+    NoArvore *noB = arvore[*contador_arvore];
+    (*contador_arvore)++;
     noB->id = getDestinoAresta(a);
     noB->vizinho = arvore[getOrigemAresta(a)];
     noB->peso = getPesoAresta(a);
     arvore[getOrigemAresta(a)] = noB;
 
-    NoArvore *noA = (NoArvore *) malloc (sizeof(NoArvore));
+    //NoArvore *noA = (NoArvore *) malloc (sizeof(NoArvore));
+    NoArvore *noA = arvore[*contador_arvore];
+    (*contador_arvore)++;
+    noA->id = getOrigemAresta(a);
+    noA->vizinho = arvore[getDestinoAresta(a)];
+    noA->peso = getPesoAresta(a);
+    arvore[getDestinoAresta(a)] = noA;
+}
+
+void addArestaNaArvoreComPiscina(Aresta *a, NoArvore **arvore, NoArvore *pool, int *contador_pool){
+    NoArvore *noB = &pool[*contador_pool];
+    (*contador_pool)++;
+    noB->id = getDestinoAresta(a);
+    noB->vizinho = arvore[getOrigemAresta(a)];
+    noB->peso = getPesoAresta(a);
+    arvore[getOrigemAresta(a)] = noB;
+
+    NoArvore *noA = &pool[*contador_pool];
+    (*contador_pool)++;
     noA->id = getOrigemAresta(a);
     noA->vizinho = arvore[getDestinoAresta(a)];
     noA->peso = getPesoAresta(a);

@@ -103,7 +103,7 @@ void imprimeGrupoArquivo(Grupo *g, FILE *s){
         }
     }
 
-    fprintf(s, "\n\n\n");
+    fprintf(s,"\n");
 }
 
 void imprimeVetorGrupoArquivo(Grupo **g, int n, FILE *s){
