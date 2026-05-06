@@ -4,20 +4,12 @@
 typedef struct uf UF;
 
 /**
- * @brief 
+ * @brief Inicializa uma estrutura Union-Find com N indíces
  * 
- * @param N 
- * @return UF* 
+ * @param N Tamanho da estrutura 
+ * @return UF* - Um ponteiro para a estrutura criada
  */
 UF *UF_init(int N);
-
-/**
- * @brief 
- * 
- * @param uf 
- * @return int 
- */
-int fcount(UF *uf);
 
 /**
  * @brief 

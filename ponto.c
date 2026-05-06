@@ -37,7 +37,7 @@ float calculaDistanciaEuclidiana(Ponto *p1, Ponto *p2){
     float total = 0;
     for(int i = 0; i < p1->m; i++){
         float diferenca = p1->valores[i] - p2->valores[i];
-        total += pow(diferenca, 2);
+        total += diferenca * diferenca;
     }
 
     return total; //Como só queremos ordenar, não importa a raiz ou o valor quadratico
@@ -52,8 +52,7 @@ void adicionaValorPonto(Ponto *p, float valor){
         if(temp != NULL){
             p->tamValoresTotal *= 2;
             p->valores = temp;
-        } else {
-           
+        } else {          
             printf("Erro: Falta de memória ao adicionar valor!\n");
             return;
         }

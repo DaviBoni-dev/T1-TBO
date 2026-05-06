@@ -6,7 +6,6 @@
 #include "aresta.h"
 #include "matriz.h"
 #include "MST.h"
-#include "quickSort.h"
 #include <time.h>
 
 

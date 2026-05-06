@@ -26,9 +26,6 @@ UF *UF_init(int N) {
     return my_uf;
 }
 
-int fcount(UF *uf){
-    return uf->count;
-}
 
 int UF_find(UF *uf, int i) {
     while (i != uf->id[i]){   

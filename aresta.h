@@ -6,15 +6,77 @@ typedef struct aresta Aresta;
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * @brief Compara duas arestas com base em seu peso
+ * 
+ * @param a Uma aresta a ser comparada com cast para void*
+ * @param b Uma aresta a ser comparada com cast para void*
+ * @return int - Valor negativo se a primeira aresta for menor, zero se forem iguais, positivo se a primeira aresta for maior
+ */
 int comparaAresta(const void* a, const void *b);
+
+/**
+ * @brief Cria um vetor de arestas
+ * 
+ * @param n O número de arestas a ser criado
+ * @return Aresta** - Ponteiro para o vetor de arestas criado
+ */
 Aresta **criaVetorArestas(int n);
+
+/**
+ * @brief Preenche o vetor de arestas com as distâncias da matriz
+ * 
+ * @param arestas O vetor de arestas a ser preenchido
+ * @param matriz A matriz de distâncias
+ * @param contador O número de arestas a ser preenchido
+ */
 void preencheVetorComDistancias(Aresta **arestas, float **matriz, int contador);
+
+/**
+ * @brief Ordena o vetor de arestas com base em seu peso
+ * 
+ * @param arestas O vetor de arestas a ser ordenado
+ * @param total O número total de arestas no vetor
+ */
 void ordenaArestas(Aresta **arestas, int total);
+
+/**
+ * @brief Obtém o vértice de origem de uma aresta
+ * 
+ * @param a Uma aresta
+ * @return int - O vértice de origem da aresta
+ */
 int getOrigemAresta(Aresta *a);
+
+/**
+ * @brief Obtém o vértice de destino de uma aresta
+ * 
+ * @param a Uma aresta
+ * @return int - O vértice de destino da aresta
+ */
 int getDestinoAresta(Aresta *a);
+
+/**
+ * @brief Obtém o peso de uma aresta
+ * 
+ * @param a Uma aresta
+ * @return float - O peso da aresta
+ */
 float getPesoAresta(Aresta *a);
+
+/**
+ * @brief Libera a memória alocada para uma aresta
+ * 
+ * @param a Uma aresta
+ */
 void liberaAresta(Aresta *a);
 
+/**
+ * @brief Libera a memória alocada para um vetor de arestas
+ * 
+ * @param a Um vetor de arestas
+ * @param n O número de arestas no vetor
+ */
 void liberaVetorArestas(Aresta **a, int n);
 
 #endif /* ARESTA_H */
