@@ -127,9 +127,22 @@ int main(int argc, char *argv[]){
     fim = clock();
     double tempo_ordena_grupos = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
 
-    imprimeVetorGrupos(grupos, contador_grupos);
-    printf("N° de grupos: %d\n", contador_grupos);
+    //imprimeVetorGrupos(grupos, contador_grupos);
+    //printf("N° de grupos: %d\n", contador_grupos);
     
+    inicio = clock();
+    FILE *saida = fopen("saida.txt", "w");
+    
+    if (saida == NULL) {
+        printf("Erro: Nao foi possivel criar o arquivo saida.txt\n");
+        exit(1); 
+    }
+    
+    imprimeVetorGrupoArquivo(grupos, contador_grupos, saida);
+
+    fim = clock();
+    double tempo_imprime_saida = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
+
     liberaMatriz(matrizDistancias, n_pontos);
     free(linha);
     liberaVetorPontos(pontos, tam_max_vetor);
@@ -138,7 +151,9 @@ int main(int argc, char *argv[]){
     liberaVetorArvores(arvore, n_pontos);
 
     UF_destroy(uf);
+    fclose(saida);
 
+    
     printf("Tempo de leitura: %.4f segundos\n", tempo_leitura);
     printf("Tempo de cálculo das distâncias: %.4f segundos\n", tempo_distancias);
     printf("Tempo de preenchimento do vetor de arestas: %.4f segundos\n", tempo_preenche_arestas);
@@ -146,6 +161,8 @@ int main(int argc, char *argv[]){
     printf("Tempo de execução do algoritmo de Kruskal: %.4f segundos\n", tempo_uf);
     printf("Tempo de percurso da árvore para formar os grupos: %.4f segundos\n", tempo_percorre_arvore);
     printf("Tempo de ordenação dos grupos: %.4f segundos\n", tempo_ordena_grupos);
+    printf("Tempo de escrita da saída: %.4f segundos\n", tempo_imprime_saida);
+
 
     return 0;
 

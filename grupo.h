@@ -78,4 +78,8 @@ void liberaGrupo(Grupo*g);
  */
 void liberaVetorGrupos(Grupo **g, int n);
 
+void imprimeGrupoArquivo(Grupo *g, FILE *s);
+
+void imprimeVetorGrupoArquivo(Grupo **g, int n, FILE *s);
+
 #endif /* A7F48332_2C2B_4771_81FA_A0CE652E6AB2 */

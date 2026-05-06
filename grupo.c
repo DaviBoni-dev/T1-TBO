@@ -86,10 +86,32 @@ void adicionaElementoGrupo(Grupo *g, int elemento, char *id){
 void imprimeGrupo(Grupo *g){
     printf("Grupo com %d elementos :\n", g->qtd_elementos);
     for(int i = 0; i < g->qtd_elementos; i++){
-        printf("%s, ", g->idElementos[i]);
+        printf("%s", g->idElementos[i]);
+        if(i != g->qtd_elementos - 1){
+            printf(", ");
+        }
     }
 
     printf("\n");
+}
+
+void imprimeGrupoArquivo(Grupo *g, FILE *s){
+    for(int i = 0; i < g->qtd_elementos; i++){
+        fprintf(s, "%s", g->idElementos[i]);
+        if(i != g->qtd_elementos - 1){
+            fprintf(s, ",");
+        }
+    }
+
+    fprintf(s, "\n\n\n");
+}
+
+void imprimeVetorGrupoArquivo(Grupo **g, int n, FILE *s){
+    for(int i = 0; i < n; i++){
+        if(g[i] != NULL) { 
+            imprimeGrupoArquivo(g[i], s);
+        }
+    }
 }
 
 void imprimeVetorGrupos(Grupo **g, int n){
