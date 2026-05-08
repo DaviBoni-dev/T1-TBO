@@ -5,6 +5,7 @@ typedef struct aresta Aresta;
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "ponto.h"
 
 /**
  * @brief Compara duas arestas com base em seu peso
@@ -21,16 +22,18 @@ int comparaAresta(const void* a, const void *b);
  * @param n O número de arestas a ser criado
  * @return Aresta** - Ponteiro para o vetor de arestas criado
  */
-Aresta **criaVetorArestas(int n);
+Aresta **criaVetorArestas(int n, Aresta *pool);
+
+Aresta *criaPiscinaAresta(int n);
 
 /**
  * @brief Preenche o vetor de arestas com as distâncias da matriz
  * 
  * @param arestas O vetor de arestas a ser preenchido
- * @param matriz A matriz de distâncias
+ * @param pontos O vetor de pontos a serem calculados as distâncias
  * @param contador O número de arestas a ser preenchido
  */
-void preencheVetorComDistancias(Aresta **arestas, float **matriz, int contador);
+void preencheVetorComDistancias(Aresta **arestas, Ponto **pontos, int contador);
 
 /**
  * @brief Ordena o vetor de arestas com base em seu peso

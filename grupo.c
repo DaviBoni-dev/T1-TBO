@@ -54,6 +54,13 @@ int comparaGrupo(const void* a, const void *b){
    return strcmp(a1, b1);
 }
 
+int comparaGruposEntreSi(const void* a, const void *b){
+    Grupo *a2 = *(Grupo **)a;
+    Grupo *b2 = *(Grupo**)b;
+
+    return strcmp(a2->idElementos[0], b2->idElementos[0]);
+}
+
 char **getIdElementosGrupo(Grupo *g){
     return g->idElementos;
 }
@@ -128,6 +135,8 @@ void ordenaGrupos(Grupo **g, int n){
     for(int i = 0; i < n; i++){
         qsort(g[i]->idElementos ,g[i]->qtd_elementos ,sizeof(char*), comparaGrupo);
     }
+
+    qsort(g, n, sizeof(Grupo *), comparaGruposEntreSi);
 }
 
 /*

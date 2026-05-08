@@ -9,7 +9,6 @@
 #include <time.h>
 
 
-
 int main(int argc, char *argv[]){
 
     char *arqEntrada = strdup(argv[1]);
@@ -63,7 +62,7 @@ int main(int argc, char *argv[]){
     
     inicio = clock();
     float **matrizDistancias = criaMatriz(n_pontos);
-    preencheMatrizComDistancias(matrizDistancias, n_pontos, pontos);
+    //preencheMatrizComDistancias(matrizDistancias, n_pontos, pontos);
 
     fim = clock();
 
@@ -72,8 +71,9 @@ int main(int argc, char *argv[]){
     inicio = clock();
     int totalArestas = (n_pontos * (n_pontos - 1)) / 2;
 
-    Aresta **arestas = criaVetorArestas(totalArestas);
-    preencheVetorComDistancias(arestas, matrizDistancias, n_pontos);
+    Aresta *pool = criaPiscinaAresta(totalArestas);
+    Aresta **arestas = criaVetorArestas(totalArestas, pool);
+    preencheVetorComDistancias(arestas, pontos, n_pontos);
 
     fim = clock();
 
@@ -154,7 +154,7 @@ int main(int argc, char *argv[]){
     liberaMatriz(matrizDistancias, n_pontos);
     free(linha);
     liberaVetorPontos(pontos, tam_max_vetor);
-    liberaVetorArestas(arestas, totalArestas);
+    //liberaVetorArestas(arestas, totalArestas);
     liberaVetorGrupos(grupos, n_pontos);
     //liberaVetorArvores(arvore, n_pontos);
     free(arvore);

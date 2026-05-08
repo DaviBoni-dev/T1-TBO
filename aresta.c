@@ -19,11 +19,17 @@ int comparaAresta(const void* a, const void *b){
     return 0;
 }
 
-Aresta **criaVetorArestas(int n){
-    Aresta **arestas = (Aresta **) malloc (n * sizeof(Aresta*));
+Aresta *criaPiscinaAresta(int n){
+    Aresta *pool = (Aresta *) malloc (n * sizeof(Aresta));
 
+    return pool;
+}
+
+Aresta **criaVetorArestas(int n, Aresta *pool){
+    Aresta **arestas = (Aresta **) malloc (n * sizeof(Aresta*));
+    
     for(int i = 0; i < n; i++){
-        arestas[i] = (Aresta *) malloc (sizeof(Aresta));
+        arestas[i] = &pool[i];
     }
 
     return arestas;
@@ -46,13 +52,13 @@ void liberaVetorArestas(Aresta **a, int n){
     free(a);
 }
 
-void preencheVetorComDistancias(Aresta **arestas, float **matriz, int contador){
+void preencheVetorComDistancias(Aresta **arestas, Ponto **pontos, int contador){
     int f = 0;
     for(int i = 0; i < contador; i++){
         for(int j= i + 1; j < contador; j++){
             arestas[f]->origem = i;
             arestas[f]->destino = j;
-            arestas[f]->peso = matriz[i][j];
+            arestas[f]->peso = calculaDistanciaEuclidiana(pontos[i], pontos[j]);
             f++;
         }
     }
