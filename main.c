@@ -4,36 +4,34 @@
 #include "ponto.h"
 #include "UF.h"
 #include "aresta.h"
-#include "matriz.h"
 #include "MST.h"
 #include <time.h>
 
 
 int main(int argc, char *argv[]){
 
+    if(argc < 4){
+        return 1;
+    }
+
     char *arqEntrada = strdup(argv[1]);
-    FILE *entrada = fopen(arqEntrada, "r");
+    char *arqSaida = strdup(argv[3]);
     int k = atoi(argv[2]);
+    FILE *entrada = fopen(arqEntrada, "r");
 
-    clock_t inicio, fim;
-    double tempo_leitura, tempo_distancias, tempo_ordenacao, tempo_mst;
+    int tam_max_vetor = 10;
+    Ponto **pontos = criaVetorPontos(tam_max_vetor);
 
-    Ponto **pontos = criaVetorPontos();
-
-    free(arqEntrada);
-    
     char *linha = NULL;
     size_t tam = 0;
     int n_pontos = 0;
-    int tam_max_vetor = 10;
     
-    inicio = clock();
 
     while(getline(&linha, &tam, entrada) != -1){
 
         if(n_pontos >= tam_max_vetor){
             tam_max_vetor *= 2;
-
+            
             pontos = realocaVetorPontos(pontos, tam_max_vetor);
             for(int i = n_pontos; i < tam_max_vetor; i++){
                 pontos[i] = criaPonto();
@@ -55,35 +53,15 @@ int main(int argc, char *argv[]){
         n_pontos++;
     }
 
-    fim = clock();
-    tempo_leitura = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
-
     fclose(entrada);
     
-    inicio = clock();
-    float **matrizDistancias = criaMatriz(n_pontos);
-    //preencheMatrizComDistancias(matrizDistancias, n_pontos, pontos);
-
-    fim = clock();
-
-    tempo_distancias =  ((double)(fim - inicio)) / CLOCKS_PER_SEC;
-
-    inicio = clock();
     int totalArestas = (n_pontos * (n_pontos - 1)) / 2;
 
     Aresta *pool = criaPiscinaAresta(totalArestas);
     Aresta **arestas = criaVetorArestas(totalArestas, pool);
     preencheVetorComDistancias(arestas, pontos, n_pontos);
-
-    fim = clock();
-
-    double tempo_preenche_arestas = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
-
-    inicio = clock();
     ordenaArestas(arestas, totalArestas);
-    //quickSort(arestas, 0, totalArestas - 1);
-    fim = clock();
-    double tempo_ordena_arestas = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
+    
 
     int max_nos = n_pontos * 2;
     int contadorArvore = 0;
@@ -94,20 +72,14 @@ int main(int argc, char *argv[]){
 
     int arestasAdicionadas = 0;
 
-    inicio = clock();
      for(int i = 0; i < totalArestas; i++){
         Aresta *atual = arestas[i];
         int src = getOrigemAresta(atual);
         int dst = getDestinoAresta(atual);
 
         if(UF_find(uf,getOrigemAresta(atual)) != UF_find(uf, getDestinoAresta(atual))){
-            //addArestaNaArvore(atual, arvore, &contadorArvore);
-
             addArestaNaArvoreComPiscina(atual, arvore, piscina_nos, &contadorArvore);
-
-
             arestasAdicionadas++;
-
             UF_union(uf,getOrigemAresta(atual), getDestinoAresta(atual));
 
             if(arestasAdicionadas >= (n_pontos - k)){
@@ -116,64 +88,36 @@ int main(int argc, char *argv[]){
         }
     }
 
-    fim = clock();
 
-    double tempo_uf =  ((double)(fim - inicio)) / CLOCKS_PER_SEC;
-
-    inicio = clock();
     int contador_grupos = 0;
     Grupo **grupos = criaVetorGrupo(n_pontos);
     percorreArvore(arvore, n_pontos, pontos, grupos, &contador_grupos);
-    fim = clock();
-    
-    double tempo_percorre_arvore = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
-
-    inicio = clock();
     
     ordenaGrupos(grupos, contador_grupos);
-
-    fim = clock();
-    double tempo_ordena_grupos = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
-
-    //imprimeVetorGrupos(grupos, contador_grupos);
-    //printf("N° de grupos: %d\n", contador_grupos);
-    
-    inicio = clock();
-    FILE *saida = fopen("saida.txt", "w");
+    FILE *saida = fopen(arqSaida, "w");
     
     if (saida == NULL) {
-        printf("Erro: Nao foi possivel criar o arquivo saida.txt\n");
+        printf("Erro: Nao foi possivel criar o arquivo %s\n", arqSaida);
         exit(1); 
     }
     
     imprimeVetorGrupoArquivo(grupos, contador_grupos, saida);
 
-    fim = clock();
-    double tempo_imprime_saida = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
-
-    liberaMatriz(matrizDistancias, n_pontos);
+    
     free(linha);
     liberaVetorPontos(pontos, tam_max_vetor);
-    //liberaVetorArestas(arestas, totalArestas);
     liberaVetorGrupos(grupos, n_pontos);
-    //liberaVetorArvores(arvore, n_pontos);
     free(arvore);
     free(piscina_nos);
-
+    free(pool);
+    free(arestas);
+    
     UF_destroy(uf);
     fclose(saida);
+    free(arqEntrada);
+    free(arqSaida);
 
     
-    printf("Tempo de leitura: %.4f segundos\n", tempo_leitura);
-    printf("Tempo de cálculo das distâncias: %.4f segundos\n", tempo_distancias);
-    printf("Tempo de preenchimento do vetor de arestas: %.4f segundos\n", tempo_preenche_arestas);
-    printf("Tempo de ordenação das arestas: %.4f segundos\n", tempo_ordena_arestas);
-    printf("Tempo de execução do algoritmo de Kruskal: %.4f segundos\n", tempo_uf);
-    printf("Tempo de percurso da árvore para formar os grupos: %.4f segundos\n", tempo_percorre_arvore);
-    printf("Tempo de ordenação dos grupos: %.4f segundos\n", tempo_ordena_grupos);
-    printf("Tempo de escrita da saída: %.4f segundos\n", tempo_imprime_saida);
-
-
     return 0;
 
 }

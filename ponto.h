@@ -58,8 +58,7 @@ void adicionaValorPonto(Ponto *p, float valor);
  * 
  * @return Ponto** - Ponteiro para o vetor de pontos criado
  */
-Ponto **criaVetorPontos();
-
+Ponto **criaVetorPontos(int n);
 /**
  * @brief Libera a memória alocada para um ponto
  * 

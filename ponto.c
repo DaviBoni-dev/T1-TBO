@@ -63,10 +63,10 @@ void adicionaValorPonto(Ponto *p, float valor){
     p->m++;
 }
 
-Ponto **criaVetorPontos(){
-     Ponto **pontos = (Ponto **) malloc (10 * sizeof(Ponto *));
+Ponto **criaVetorPontos(int n){
+     Ponto **pontos = (Ponto **) malloc (n * sizeof(Ponto *));
 
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < n; i++){
         pontos[i] = criaPonto();
     }
 
