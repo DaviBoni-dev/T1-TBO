@@ -80,6 +80,5 @@ void liberaAresta(Aresta *a);
  * @param a Um vetor de arestas
  * @param n O número de arestas no vetor
  */
-void liberaVetorArestas(Aresta **a, int n);
-
+void liberaVetorArestas(Aresta **a, Aresta *piscina);
 #endif /* ARESTA_H */

@@ -44,11 +44,8 @@ void liberaAresta(Aresta *a){
         free(a);
 }
 
-void liberaVetorArestas(Aresta **a, int n){
-    for(int i = 0; i < n; i++){
-        liberaAresta(a[i]);
-    }
-
+void liberaVetorArestas(Aresta **a, Aresta *piscina){
+    free(piscina);
     free(a);
 }
 

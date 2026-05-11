@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
     ordenaArestas(arestas, totalArestas);
     
 
-    int max_nos = n_pontos * 2;
+    int max_nos = (n_pontos - 1) * 2 + 10;
     int contadorArvore = 0;
 
     UF *uf = UF_init(n_pontos);
@@ -74,11 +74,9 @@ int main(int argc, char *argv[]){
 
      for(int i = 0; i < totalArestas; i++){
         Aresta *atual = arestas[i];
-        int src = getOrigemAresta(atual);
-        int dst = getDestinoAresta(atual);
 
         if(UF_find(uf,getOrigemAresta(atual)) != UF_find(uf, getDestinoAresta(atual))){
-            addArestaNaArvoreComPiscina(atual, arvore, piscina_nos, &contadorArvore);
+            addArestaNaArvoreComPiscina(atual, arvore, piscina_nos, &contadorArvore, max_nos);
             arestasAdicionadas++;
             UF_union(uf,getOrigemAresta(atual), getDestinoAresta(atual));
 
@@ -90,7 +88,7 @@ int main(int argc, char *argv[]){
 
 
     int contador_grupos = 0;
-    Grupo **grupos = criaVetorGrupo(n_pontos);
+    Grupo **grupos = criaVetorGrupo(k);
     percorreArvore(arvore, n_pontos, pontos, grupos, &contador_grupos);
     
     ordenaGrupos(grupos, contador_grupos);
@@ -106,11 +104,11 @@ int main(int argc, char *argv[]){
     
     free(linha);
     liberaVetorPontos(pontos, tam_max_vetor);
-    liberaVetorGrupos(grupos, n_pontos);
-    free(arvore);
-    free(piscina_nos);
-    free(pool);
-    free(arestas);
+    liberaVetorGrupos(grupos, k);
+    liberaVetorArestas(arestas, pool);
+    liberaVetorArvores(arvore, piscina_nos);
+
+
     
     UF_destroy(uf);
     fclose(saida);

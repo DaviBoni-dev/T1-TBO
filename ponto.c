@@ -102,7 +102,7 @@ void liberaPonto(Ponto *p){
 void imprimePonto(Ponto *p){
     printf("%s", p->idUnico);
     for(int i = 0; i < p->tamValoresPreenchidos; i++){
-        printf(",%.2f", p->valores[0]);
+        printf(",%.2f", p->valores[i]);
     }
 
     printf("\n");
