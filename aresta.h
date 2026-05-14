@@ -8,13 +8,12 @@ typedef struct aresta Aresta;
 #include "ponto.h"
 
 /**
- * @brief Compara duas arestas com base em seu peso
+ * @brief Cria um vetor de arestas de tamanho n
  * 
- * @param a Uma aresta a ser comparada com cast para void*
- * @param b Uma aresta a ser comparada com cast para void*
- * @return int - Valor negativo se a primeira aresta for menor, zero se forem iguais, positivo se a primeira aresta for maior
+ * @param n O número de arestas a ser criado
+ * @return Aresta* - Ponteiro para o vetor de arestas criado
  */
-int comparaAresta(const void* a, const void *b);
+Aresta *criaPiscinaAresta(int n);
 
 /**
  * @brief Cria um vetor de arestas
@@ -24,7 +23,24 @@ int comparaAresta(const void* a, const void *b);
  */
 Aresta **criaVetorArestas(int n, Aresta *pool);
 
-Aresta *criaPiscinaAresta(int n);
+/**
+ * @brief Ordena o vetor de arestas com base em seu peso
+ * 
+ * @param arestas O vetor de arestas a ser ordenado
+ * @param total O número total de arestas no vetor
+ */
+void ordenaArestas(Aresta **arestas, int total);
+
+/**
+ * @brief Compara duas arestas com base em seu peso
+ * 
+ * @param a Uma aresta a ser comparada com cast para void*
+ * @param b Uma aresta a ser comparada com cast para void*
+ * @return int - Valor negativo se a primeira aresta for menor, zero se forem iguais, positivo se a primeira aresta for maior
+ */
+int comparaAresta(const void* a, const void *b);
+
+
 
 /**
  * @brief Preenche o vetor de arestas com as distâncias da matriz
@@ -35,13 +51,6 @@ Aresta *criaPiscinaAresta(int n);
  */
 void preencheVetorComDistancias(Aresta **arestas, Ponto **pontos, int contador);
 
-/**
- * @brief Ordena o vetor de arestas com base em seu peso
- * 
- * @param arestas O vetor de arestas a ser ordenado
- * @param total O número total de arestas no vetor
- */
-void ordenaArestas(Aresta **arestas, int total);
 
 /**
  * @brief Obtém o vértice de origem de uma aresta
@@ -81,4 +90,5 @@ void liberaAresta(Aresta *a);
  * @param n O número de arestas no vetor
  */
 void liberaVetorArestas(Aresta **a, Aresta *piscina);
+
 #endif /* ARESTA_H */

@@ -12,40 +12,38 @@ typedef struct uf UF;
 UF *UF_init(int N);
 
 /**
- * @brief 
+ * @brief Encontra o representante de um elemento na estrutura Union-Find
  * 
- * @param uf 
- * @param i 
- * @return int 
+ * @param uf A estrutura Union-Find
+ * @param i O elemento para o qual encontrar o representante
+ * @return int - O representante do elemento
  */
 int UF_find(UF *uf, int i);
 
 /**
- * @brief 
+ * @brief Verifica se dois elementos estão conectados na estrutura Union-Find
  * 
- * @param uf 
- * @param p 
- * @param q 
- * @return int 
+ * @param uf A estrutura Union-Find
+ * @param p O primeiro elemento
+ * @param q O segundo elemento
+ * @return int - 1 se os elementos estiverem conectados, 0 caso contrário
  */
 int connected(UF *uf, int p, int q);
 
 /**
- * @brief 
+ * @brief Une dois elementos na estrutura Union-Find
  * 
- * @param uf 
- * @param p 
- * @param q 
+ * @param uf A estrutura Union-Find
+ * @param p O primeiro elemento
+ * @param q O segundo elemento
  */
 void UF_union(UF *uf, int p, int q);
 
 /**
- * @brief 
+ * @brief Destroi a estrutura Union-Find
  * 
+ * @param uf A estrutura Union-Find
  */
-void UF_print(UF *uf);
-
-
 void UF_destroy(UF *uf);
 
 

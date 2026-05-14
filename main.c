@@ -5,12 +5,14 @@
 #include "UF.h"
 #include "aresta.h"
 #include "MST.h"
+#include "agrupador.h"
 #include <time.h>
 
 
 int main(int argc, char *argv[]){
 
     if(argc < 4){
+        printf("Insira os parâmetros corretamente: ./programa <arquivo_entrada> <k> <arquivo_saida>\n");
         return 1;
     }
 
@@ -18,106 +20,33 @@ int main(int argc, char *argv[]){
     char *arqSaida = strdup(argv[3]);
     int k = atoi(argv[2]);
     FILE *entrada = fopen(arqEntrada, "r");
-
-    int tam_max_vetor = 10;
-    Ponto **pontos = criaVetorPontos(tam_max_vetor);
-
-    char *linha = NULL;
-    size_t tam = 0;
-    int n_pontos = 0;
-    
-
-    while(getline(&linha, &tam, entrada) != -1){
-
-        if(n_pontos >= tam_max_vetor){
-            tam_max_vetor *= 2;
-            
-            pontos = realocaVetorPontos(pontos, tam_max_vetor);
-            for(int i = n_pontos; i < tam_max_vetor; i++){
-                pontos[i] = criaPonto();
-            }
-        }
-        
-        char *token = strtok(linha, ",");
-        adicionaIdPonto(pontos[n_pontos], token);
-        
-        while(token != NULL){
-            token = strtok(NULL, ",");
-            if(token != NULL){
-                float valor = atof(token);
-                adicionaValorPonto(pontos[n_pontos], valor);
-                
-            }
-        }
-        
-        n_pontos++;
+    if(entrada == NULL){
+        printf("Erro: Nao foi possivel criar o arquivo %s\n", arqEntrada);
+        exit(1);
     }
 
-    fclose(entrada);
+    Agrupador *agrupador = criaAgrupador(k);
     
-    int totalArestas = (n_pontos * (n_pontos - 1)) / 2;
-
-    Aresta *pool = criaPiscinaAresta(totalArestas);
-    Aresta **arestas = criaVetorArestas(totalArestas, pool);
-    preencheVetorComDistancias(arestas, pontos, n_pontos);
-    ordenaArestas(arestas, totalArestas);
+    lePontos(agrupador, entrada);
+    preencheOrdenaArestas(agrupador);
+    criaMST(agrupador);
+    criaOrdenaGrupos(agrupador);
     
-
-    int max_nos = (n_pontos - 1) * 2 + 10;
-    int contadorArvore = 0;
-
-    UF *uf = UF_init(n_pontos);
-    NoArvore **arvore = criaVetorArvores(n_pontos, max_nos);
-    NoArvore *piscina_nos = criaNoArvore(max_nos);
-
-    int arestasAdicionadas = 0;
-
-     for(int i = 0; i < totalArestas; i++){
-        Aresta *atual = arestas[i];
-
-        if(UF_find(uf,getOrigemAresta(atual)) != UF_find(uf, getDestinoAresta(atual))){
-            addArestaNaArvoreComPiscina(atual, arvore, piscina_nos, &contadorArvore, max_nos);
-            arestasAdicionadas++;
-            UF_union(uf,getOrigemAresta(atual), getDestinoAresta(atual));
-
-            if(arestasAdicionadas >= (n_pontos - k)){
-                break;
-            }
-        }
-    }
-
-
-    int contador_grupos = 0;
-    Grupo **grupos = criaVetorGrupo(k);
-    percorreArvore(arvore, n_pontos, pontos, grupos, &contador_grupos);
-    
-    ordenaGrupos(grupos, contador_grupos);
     FILE *saida = fopen(arqSaida, "w");
-    
     if (saida == NULL) {
         printf("Erro: Nao foi possivel criar o arquivo %s\n", arqSaida);
         exit(1); 
     }
     
-    imprimeVetorGrupoArquivo(grupos, contador_grupos, saida);
+    imprimeGruposArquivo(agrupador, saida);
 
-    
-    free(linha);
-    liberaVetorPontos(pontos, tam_max_vetor);
-    liberaVetorGrupos(grupos, k);
-    liberaVetorArestas(arestas, pool);
-    liberaVetorArvores(arvore, piscina_nos);
-
-
-    
-    UF_destroy(uf);
+    liberaAgrupador(agrupador);
+    fclose(entrada);
     fclose(saida);
     free(arqEntrada);
     free(arqSaida);
 
-    
     return 0;
-
 }
 
 

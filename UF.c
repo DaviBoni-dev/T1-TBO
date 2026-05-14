@@ -66,9 +66,3 @@ void UF_union(UF *uf, int p, int q) {
     }
     uf->count--;
 }
-
-void UF_print(UF *uf){
-    for(int i = 0; i < uf->count; i++){
-        printf("%d\n", uf->id[i]);
-    }
-}

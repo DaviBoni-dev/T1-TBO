@@ -10,15 +10,6 @@
 };
 
 
-int comparaAresta(const void* a, const void *b){
-    Aresta *a1 = *(Aresta**) a;
-    Aresta *b1 = *(Aresta**) b;
-
-    if(a1->peso < b1->peso) return -1;
-    else if(a1->peso > b1->peso) return 1;
-    return 0;
-}
-
 Aresta *criaPiscinaAresta(int n){
     Aresta *pool = (Aresta *) malloc (n * sizeof(Aresta));
 
@@ -35,18 +26,17 @@ Aresta **criaVetorArestas(int n, Aresta *pool){
     return arestas;
 }
 
-float getPesoAresta(Aresta *a){
-    return a->peso;
+void ordenaArestas(Aresta **arestas, int total){
+    qsort(arestas, total, sizeof(Aresta*), comparaAresta);
 }
 
-void liberaAresta(Aresta *a){
-    if(a != NULL)
-        free(a);
-}
+int comparaAresta(const void* a, const void *b){
+    Aresta *a1 = *(Aresta**) a;
+    Aresta *b1 = *(Aresta**) b;
 
-void liberaVetorArestas(Aresta **a, Aresta *piscina){
-    free(piscina);
-    free(a);
+    if(a1->peso < b1->peso) return -1;
+    else if(a1->peso > b1->peso) return 1;
+    return 0;
 }
 
 void preencheVetorComDistancias(Aresta **arestas, Ponto **pontos, int contador){
@@ -61,10 +51,6 @@ void preencheVetorComDistancias(Aresta **arestas, Ponto **pontos, int contador){
     }
 }
 
-void ordenaArestas(Aresta **arestas, int total){
-    qsort(arestas, total, sizeof(Aresta*), comparaAresta);
-}
-
 int getOrigemAresta(Aresta *a){
     return a->origem;
 }
@@ -72,3 +58,19 @@ int getOrigemAresta(Aresta *a){
 int getDestinoAresta(Aresta *a){
     return a->destino;
 }
+
+float getPesoAresta(Aresta *a){
+    return a->peso;
+}
+
+void liberaAresta(Aresta *a){
+    if(a != NULL)
+        free(a);
+}
+
+void liberaVetorArestas(Aresta **a, Aresta *piscina){
+    free(piscina);
+    free(a);
+}
+
+
