@@ -6,7 +6,7 @@
  struct aresta{
     int origem;
     int destino;
-    double peso;
+    float peso;
 };
 
 

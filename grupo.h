@@ -26,10 +26,9 @@ Grupo **criaVetorGrupo(int n);
 
 /** @brief Adiciona um elemento a um grupo.
  * @param g Ponteiro para o grupo.
- * @param elemento Índice do elemento a ser adicionado.
  * @param id ID do elemento a ser adicionado.
  */
-void adicionaElementoGrupo(Grupo *g, int elemento, char *id);
+void adicionaElementoGrupo(Grupo *g, char *id);
 
 /** @brief Compara dois grupos.
  * @param a Ponteiro para o primeiro grupo.

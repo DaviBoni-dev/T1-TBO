@@ -32,6 +32,8 @@ void lePontos(Agrupador *a, FILE *entrada){
 
     while(getline(&linha, &tam, entrada) != -1){
 
+        linha[strcspn(linha, "\n")] = '\0';
+
         if(a->n_pontos >= a->tam_max_vetor){
             a->tam_max_vetor *= 2;
             

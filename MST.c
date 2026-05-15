@@ -71,7 +71,7 @@ void percorreArvore(NoArvore **arvore, int n_pontos, Ponto **pontos, Grupo **gru
                 }
                 verificador[idAtual] = 1;
 
-                adicionaElementoGrupo(grupos[*contador_grupo], idAtual, getIdUnico(pontos[idAtual]));
+                adicionaElementoGrupo(grupos[*contador_grupo], getIdUnico(pontos[idAtual]));
 
                 NoArvore *vizinho = arvore[idAtual];
                 while(vizinho != NULL){
