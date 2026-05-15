@@ -5,7 +5,7 @@
 #include "ponto.h"
 
 struct ponto  {
-    float *valores;
+    double *valores;
     int tamValoresPreenchidos;
     int tamValoresTotal;
     int m;
@@ -15,52 +15,12 @@ struct ponto  {
 
 Ponto *criaPonto(){
     Ponto *ponto = (Ponto *) malloc (sizeof(Ponto));
-    ponto->valores = (float *) malloc (10 * sizeof(float));
+    ponto->valores = (double *) malloc (10 * sizeof(double));
     ponto->m = 0;
     ponto->tamValoresTotal = 10;
     ponto->tamValoresPreenchidos = 0;
     ponto->idUnico = NULL;
     return ponto;
-}
-
-char *getIdUnico(Ponto *p){
-    return p->idUnico;
-}
-
-void adicionaIdPonto(Ponto *p, char *id){
-
-    p->idUnico = strdup(id);
-    p->tamId = strlen(id) + 1;
-}
-float calculaDistanciaEuclidiana(Ponto *p1, Ponto *p2){
-    
-    float total = 0;
-    for(int i = 0; i < p1->m; i++){
-        float diferenca = p1->valores[i] - p2->valores[i];
-        total += diferenca * diferenca;
-    }
-
-    return total; //Como só queremos ordenar, não importa a raiz ou o valor quadratico
-}
-
-
-void adicionaValorPonto(Ponto *p, float valor){
-
-    if(p->tamValoresPreenchidos == p->tamValoresTotal){
-        float *temp = (float *) realloc (p->valores, (2 * p->tamValoresPreenchidos) * sizeof(float));
-
-        if(temp != NULL){
-            p->tamValoresTotal *= 2;
-            p->valores = temp;
-        } else {          
-            printf("Erro: Falta de memória ao adicionar valor!\n");
-            return;
-        }
-    }
-
-    p->valores[p->tamValoresPreenchidos] = valor;
-    p->tamValoresPreenchidos++;
-    p->m++;
 }
 
 Ponto **criaVetorPontos(int n){
@@ -71,6 +31,16 @@ Ponto **criaVetorPontos(int n){
     }
 
     return pontos;
+}
+
+void adicionaIdPonto(Ponto *p, char *id){
+
+    p->idUnico = strdup(id);
+    p->tamId = strlen(id) + 1;
+}
+
+char *getIdUnico(Ponto *p){
+    return p->idUnico;
 }
 
 Ponto **realocaVetorPontos(Ponto **p, int n){
@@ -87,6 +57,39 @@ Ponto **realocaVetorPontos(Ponto **p, int n){
 
 }
 
+double calculaDistanciaEuclidiana(Ponto *p1, Ponto *p2){
+    
+    double total = 0;
+    for(int i = 0; i < p1->m; i++){
+        double diferenca = p1->valores[i] - p2->valores[i];
+        total += diferenca * diferenca;
+    }
+
+    return total; //Como só queremos ordenar, não importa a raiz ou o valor quadratico
+}
+
+
+void adicionaValorPonto(Ponto *p, double valor){
+
+    if(p->tamValoresPreenchidos == p->tamValoresTotal){
+        double *temp = (double *) realloc (p->valores, (2 * p->tamValoresPreenchidos) * sizeof(double));
+
+        if(temp != NULL){
+            p->tamValoresTotal *= 2;
+            p->valores = temp;
+        } else {          
+            printf("Erro: Falta de memória ao adicionar valor!\n");
+            return;
+        }
+    }
+
+    p->valores[p->tamValoresPreenchidos] = valor;
+    p->tamValoresPreenchidos++;
+    p->m++;
+}
+
+
+
 void liberaPonto(Ponto *p){
     if(p != NULL){
         if(p->idUnico != NULL)
@@ -96,21 +99,6 @@ void liberaPonto(Ponto *p){
 
 
         free(p);
-    }
-}
-
-void imprimePonto(Ponto *p){
-    printf("%s", p->idUnico);
-    for(int i = 0; i < p->tamValoresPreenchidos; i++){
-        printf(",%.2f", p->valores[i]);
-    }
-
-    printf("\n");
-}
-
-void imprimeVetorPontos(Ponto **pontos, int n){
-    for(int i = 0; i < n; i++){
-        imprimePonto(pontos[i]);
     }
 }
 

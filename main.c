@@ -12,7 +12,7 @@
 int main(int argc, char *argv[]){
 
     if(argc < 4){
-        printf("Insira os parâmetros corretamente: ./programa <arquivo_entrada> <k> <arquivo_saida>\n");
+        fprintf(stderr, "Insira os parâmetros corretamente: ./programa <arquivo_entrada> <k> <arquivo_saida>\n");
         return 1;
     }
 
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]){
     
     FILE *saida = fopen(arqSaida, "w");
     if (saida == NULL) {
-        printf("Erro: Nao foi possivel criar o arquivo %s\n", arqSaida);
+        fprintf(stderr,"Erro: Nao foi possivel criar o arquivo %s\n", arqSaida);
         exit(1); 
     }
     

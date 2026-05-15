@@ -13,6 +13,13 @@ typedef struct ponto Ponto;
 Ponto *criaPonto();
 
 /**
+ * @brief Cria um vetor de pontos e aloca memória para ele
+ * 
+ * @return Ponto** - Ponteiro para o vetor de pontos criado
+ */
+Ponto **criaVetorPontos(int n);
+
+/**
  * @brief Adiciona um ID único a um ponto
  * 
  * @param p O ponto ao qual o ID será adicionado
@@ -36,14 +43,15 @@ char *getIdUnico(Ponto *p);
  * @return Ponto** - Ponteiro para o vetor de pontos realocado
  */
 Ponto **realocaVetorPontos(Ponto **p, int n);
+
 /**
  * @brief Calcula a distância euclidiana entre dois pontos
  * 
  * @param p1 O primeiro ponto
  * @param p2 O segundo ponto
- * @return float - A distância euclidiana entre os dois pontos
+ * @return double - A distância euclidiana entre os dois pontos
  */
-float calculaDistanciaEuclidiana(Ponto *p1, Ponto *p2);
+double calculaDistanciaEuclidiana(Ponto *p1, Ponto *p2);
 
 /**
  * @brief Adiciona um valor a um ponto
@@ -51,35 +59,14 @@ float calculaDistanciaEuclidiana(Ponto *p1, Ponto *p2);
  * @param p O ponto ao qual o valor será adicionado
  * @param valor O valor a ser adicionado
  */
-void adicionaValorPonto(Ponto *p, float valor);
+void adicionaValorPonto(Ponto *p, double valor);
 
-/**
- * @brief Cria um vetor de pontos e aloca memória para ele
- * 
- * @return Ponto** - Ponteiro para o vetor de pontos criado
- */
-Ponto **criaVetorPontos(int n);
 /**
  * @brief Libera a memória alocada para um ponto
  * 
  * @param p O ponto a ser liberado
  */
 void liberaPonto(Ponto *p);
-
-/**
- * @brief Imprime os dados de um ponto
- * 
- * @param p O ponto a ser impresso
- */
-void imprimePonto(Ponto *p);
-
-/**
- * @brief Imprime os dados de um vetor de pontos
- * 
- * @param pontos O vetor de pontos a ser impresso
- * @param n O tamanho do vetor
- */
-void imprimeVetorPontos(Ponto **pontos, int n);
 
 /**
  * @brief Libera a memória alocada para um vetor de pontos

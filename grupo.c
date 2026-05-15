@@ -90,18 +90,6 @@ void adicionaElementoGrupo(Grupo *g, int elemento, char *id){
     g->qtd_elementos++;
 }
 
-void imprimeGrupo(Grupo *g){
-    printf("Grupo com %d elementos :\n", g->qtd_elementos);
-    for(int i = 0; i < g->qtd_elementos; i++){
-        printf("%s", g->idElementos[i]);
-        if(i != g->qtd_elementos - 1){
-            printf(", ");
-        }
-    }
-
-    printf("\n");
-}
-
 void imprimeGrupoArquivo(Grupo *g, FILE *s){
     for(int i = 0; i < g->qtd_elementos; i++){
         fprintf(s, "%s", g->idElementos[i]);
@@ -121,12 +109,6 @@ void imprimeVetorGrupoArquivo(Grupo **g, int n, FILE *s){
     }
 }
 
-void imprimeVetorGrupos(Grupo **g, int n){
-    for(int i = 0; i < n; i++){
-        imprimeGrupo(g[i]);
-    }
-}
-
 int getQtdElementosGrupo(Grupo *g){
     return g->qtd_elementos;
 }
@@ -138,21 +120,3 @@ void ordenaGrupos(Grupo **g, int n){
 
     qsort(g, n, sizeof(Grupo *), comparaGruposEntreSi);
 }
-
-/*
-    if(p->tamValoresPreenchidos == p->tamValoresTotal){
-        float *temp = (float *) realloc (p->valores, (2 * p->tamValoresPreenchidos) * sizeof(float));
-
-        if(temp != NULL){
-            p->tamValoresTotal *= 2;
-            p->valores = temp;
-        } else {
-           
-            printf("Erro: Falta de memória ao adicionar valor!\n");
-            return;
-        }
-    }
-
-    p->valores[p->tamValoresPreenchidos] = valor;
-    p->tamValoresPreenchidos++;
-    p->m++;*/

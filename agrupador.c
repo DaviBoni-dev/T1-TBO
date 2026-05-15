@@ -47,7 +47,7 @@ void lePontos(Agrupador *a, FILE *entrada){
         while(token != NULL){
             token = strtok(NULL, ",");
             if(token != NULL){
-                float valor = atof(token);
+                double valor = atof(token);
                 adicionaValorPonto(a->pontos[a->n_pontos], valor);
                 
             }

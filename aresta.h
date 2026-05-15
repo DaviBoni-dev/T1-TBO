@@ -40,8 +40,6 @@ void ordenaArestas(Aresta **arestas, int total);
  */
 int comparaAresta(const void* a, const void *b);
 
-
-
 /**
  * @brief Preenche o vetor de arestas com as distâncias da matriz
  * 
@@ -72,9 +70,9 @@ int getDestinoAresta(Aresta *a);
  * @brief Obtém o peso de uma aresta
  * 
  * @param a Uma aresta
- * @return float - O peso da aresta
+ * @return double - O peso da aresta
  */
-float getPesoAresta(Aresta *a);
+double getPesoAresta(Aresta *a);
 
 /**
  * @brief Libera a memória alocada para uma aresta

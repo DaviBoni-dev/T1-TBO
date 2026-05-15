@@ -6,7 +6,7 @@
  struct aresta{
     int origem;
     int destino;
-    float peso;
+    double peso;
 };
 
 
@@ -59,7 +59,7 @@ int getDestinoAresta(Aresta *a){
     return a->destino;
 }
 
-float getPesoAresta(Aresta *a){
+double getPesoAresta(Aresta *a){
     return a->peso;
 }
 

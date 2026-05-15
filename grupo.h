@@ -44,17 +44,6 @@ int comparaGrupo(const void* a, const void *b);
  */
 char **getIdElementosGrupo(Grupo *g);
 
-/** @brief Imprime os elementos de um grupo.
- * @param g Ponteiro para o grupo.
- */
-void imprimeGrupo(Grupo *g);
-
-/** @brief Imprime os elementos de um vetor de grupos.
- * @param g Ponteiro para o vetor de grupos.
- * @param n Número de grupos no vetor.
- */
-void imprimeVetorGrupos(Grupo **g, int n);
-
 /** @brief Retorna a quantidade de elementos de um grupo.
  * @param g Ponteiro para o grupo.
  * @return Quantidade de elementos do grupo.
@@ -78,10 +67,29 @@ void liberaGrupo(Grupo*g);
  */
 void liberaVetorGrupos(Grupo **g, int n);
 
+/**
+ * @brief Imprime um grupo em um arquivo, onde cada linha do arquivo contém os IDs dos elementos do grupo separados por vírgula.
+ * 
+ * @param g Ponteiro para o grupo.
+ * @param s Ponteiro para o arquivo.
+ */
 void imprimeGrupoArquivo(Grupo *g, FILE *s);
 
+/**
+ * @brief Imprime um vetor de grupos em um arquivo
+ * 
+ * @param g Ponteiro para o vetor de grupos.
+ * @param n Número de grupos no vetor.
+ * @param s Ponteiro para o arquivo.
+ */
 void imprimeVetorGrupoArquivo(Grupo **g, int n, FILE *s);
 
+/**
+ * @brief Compara dois grupos entre si.
+ * @param a Ponteiro para o primeiro grupo.
+ * @param b Ponteiro para o segundo grupo.
+ * @return Valor negativo se o primeiro item do primeiro grupo for menor, zero se forem iguais, positivo se o primeiro item do segundo grupo for maior.
+ */
 int comparaGruposEntreSi(const void* a, const void *b);
 
 #endif /* A7F48332_2C2B_4771_81FA_A0CE652E6AB2 */
