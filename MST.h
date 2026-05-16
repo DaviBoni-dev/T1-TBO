@@ -1,5 +1,5 @@
-#ifndef F22BC646_11F2_4685_87D2_EF516C1EEE02
-#define F22BC646_11F2_4685_87D2_EF516C1EEE02
+#ifndef MST_H
+#define MST_H
 
 #include "aresta.h"
 #include "ponto.h"
@@ -16,8 +16,20 @@ typedef struct noarvore NoArvore;
  */
 NoArvore **criaVetorArvores(int n, int max_nos);
 
+/**
+ * @brief Cria um nó de árvore e aloca memória para ele.
+ * @param n Número de nós na árvore.
+ * @return NoArvore* - Ponteiro para o nó de árvore criado.
+ */
 NoArvore *criaNoArvore(int n);
 
+/** @brief Adiciona uma aresta à árvore usando uma piscina de nós para otimizar a alocação de memória.
+ * @param a Ponteiro para a aresta a ser adicionada.
+ * @param arvore Ponteiro para o vetor de nós de árvore.
+ * @param pool Ponteiro para a piscina de nós.
+ * @param contador_pool Ponteiro para o contador da piscina de nós.
+ * @param max_nos O número máximo de nós na piscina.
+ */
 void addArestaNaArvoreComPiscina(Aresta *a, NoArvore **arvore, NoArvore *pool, int *contador_pool, int max_nos);
 
 
@@ -37,4 +49,4 @@ void percorreArvore(NoArvore **arvore, int n_pontos, Ponto *pontos, Grupo **grup
  */
 void liberaVetorArvores(NoArvore **arvore, NoArvore *piscina);
 
-#endif /* F22BC646_11F2_4685_87D2_EF516C1EEE02 */
+#endif 

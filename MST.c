@@ -6,7 +6,6 @@
 
 struct noarvore {
     int id;
-    double peso;
     NoArvore *vizinho;
 };
 
@@ -45,14 +44,12 @@ void addArestaNaArvoreComPiscina(Aresta *a, NoArvore **arvore, NoArvore *pool, i
     (*contador_pool)++;
     noB->id = getDestinoAresta(a);
     noB->vizinho = arvore[getOrigemAresta(a)];
-    noB->peso = getPesoAresta(a);
     arvore[getOrigemAresta(a)] = noB;
 
     NoArvore *noA = &pool[*contador_pool];
     (*contador_pool)++;
     noA->id = getOrigemAresta(a);
     noA->vizinho = arvore[getDestinoAresta(a)];
-    noA->peso = getPesoAresta(a);
     arvore[getDestinoAresta(a)] = noA;
 }
 

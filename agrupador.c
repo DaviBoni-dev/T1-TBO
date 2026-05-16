@@ -5,8 +5,7 @@ struct agrupador{
     Ponto *pontos;
     int n_pontos;
     int tam_max_vetor;
-    Aresta *piscinaArestas;
-    //Aresta **arestas;
+    Aresta *arestas;
     int total_arestas;
     UF *uf;
     NoArvore *piscinaNosArvore;
@@ -22,7 +21,7 @@ Agrupador *criaAgrupador(int k){
 }
 
 void lePontos(Agrupador *a, FILE *entrada){
-    a->tam_max_vetor = 10;
+    a->tam_max_vetor = TAM_MAX_INICIAL_VETOR;
     a->n_pontos = 0;
     a->pontos = criaVetorPontos(a->tam_max_vetor);
 
@@ -64,20 +63,16 @@ void lePontos(Agrupador *a, FILE *entrada){
 void preencheOrdenaArestas(Agrupador *a){
     
     a->total_arestas = (a->n_pontos * (a->n_pontos - 1)) / 2;
-    a->piscinaArestas = criaPiscinaAresta(a->total_arestas);
-    //a->arestas = criaVetorArestas(a->total_arestas, a->piscinaArestas);
-    
-    //preencheVetorComDistancias(a->arestas, a->pontos, a->n_pontos);
-    //ordenaArestas(a->arestas, a->total_arestas);
+    a->arestas = criaVetorAresta(a->total_arestas);
 
-    preencheVetorComDistanciasDireto(a->piscinaArestas, a->pontos, a->n_pontos);
-    ordenaArestasDireta(a->piscinaArestas, a->total_arestas);
+    preencheVetorComDistancias(a->arestas, a->pontos, a->n_pontos);
+
+    ordenaArestas(a->arestas, a->total_arestas);
     
 }
 
 void criaMST(Agrupador *a){
     int max_nos = (a->n_pontos - 1) * 2 + 10;
-    
     int contadorArvore = 0;
 
     a->uf = UF_init(a->n_pontos);
@@ -87,9 +82,10 @@ void criaMST(Agrupador *a){
     int arestasAdicionadas = 0;
 
      for(int i = 0; i < a->total_arestas; i++){
-        Aresta *atual = getAresta(a->piscinaArestas, i);
+        Aresta *atual = getAresta(a->arestas, i);
 
         if(UF_find(a->uf,getOrigemAresta(atual)) != UF_find(a->uf, getDestinoAresta(atual))){
+            
             addArestaNaArvoreComPiscina(atual, a->arvore, a->piscinaNosArvore, &contadorArvore, max_nos);
             arestasAdicionadas++;
             UF_union(a->uf,getOrigemAresta(atual), getDestinoAresta(atual));
@@ -105,6 +101,7 @@ void criaOrdenaGrupos(Agrupador *a){
     
     a->contador_grupos = 0;
     a->grupos = criaVetorGrupo(a->k);
+    
     percorreArvore(a->arvore, a->n_pontos, a->pontos, a->grupos, &a->contador_grupos);
     
     ordenaGrupos(a->grupos, a->contador_grupos);
@@ -117,7 +114,7 @@ void imprimeGruposArquivo(Agrupador *a, FILE *saida){
 void liberaAgrupador(Agrupador *a){
     liberaVetorPontos(a->pontos, a->tam_max_vetor);
     liberaVetorGrupos(a->grupos, a->k);
-    free(a->piscinaArestas);
+    liberaAresta(a->arestas);
     liberaVetorArvores(a->arvore, a->piscinaNosArvore);
     UF_destroy(a->uf);
     free(a);

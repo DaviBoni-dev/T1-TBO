@@ -44,7 +44,6 @@ char *getIdUnico(Ponto *p);
  */
 Ponto *realocaVetorPontos(Ponto *p, int n);
 
-Ponto *getPonto(Ponto *p, int i);
 
 /**
  * @brief Calcula a distância euclidiana entre dois pontos
@@ -56,12 +55,21 @@ Ponto *getPonto(Ponto *p, int i);
 double calculaDistanciaEuclidiana(Ponto *p1, Ponto *p2);
 
 /**
- * @brief Adiciona um valor a um ponto
+ * @brief Adiciona um valor de coordenada a um ponto
  * 
  * @param p O ponto ao qual o valor será adicionado
  * @param valor O valor a ser adicionado
  */
 void adicionaValorPonto(Ponto *p, double valor);
+
+/**
+ * @brief Obtém um ponto específico de um vetor de pontos
+ * 
+ * @param p Vetor de pontos do qual o ponto será obtido
+ * @param i Índice do ponto a ser obtido
+ * @return Ponto* 
+ */
+Ponto *getPonto(Ponto *p, int i);
 
 /**
  * @brief Libera a memória alocada para um ponto
@@ -78,4 +86,4 @@ void liberaPonto(Ponto *p);
  */
 void liberaVetorPontos(Ponto *pontos, int n);
 
-#endif /* PONTO_H */
+#endif 

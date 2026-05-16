@@ -13,21 +13,7 @@ typedef struct aresta Aresta;
  * @param n O número de arestas a ser criado
  * @return Aresta* - Ponteiro para o vetor de arestas criado
  */
-Aresta *criaPiscinaAresta(int n);
-
-/**
- * @brief Cria um vetor de arestas
- * 
- * @param n O número de arestas a ser criado
- * @return Aresta** - Ponteiro para o vetor de arestas criado
- */
-Aresta **criaVetorArestas(int n, Aresta *pool);
-
-int comparaArestaSimples(const void *a, const void *b);
-
-void ordenaArestasDireta(Aresta *arestas, int total);
-
-Aresta* getAresta(Aresta *arestas, int i);
+Aresta *criaVetorAresta(int n);
 
 /**
  * @brief Ordena o vetor de arestas com base em seu peso
@@ -35,9 +21,8 @@ Aresta* getAresta(Aresta *arestas, int i);
  * @param arestas O vetor de arestas a ser ordenado
  * @param total O número total de arestas no vetor
  */
-void ordenaArestas(Aresta **arestas, int total);
+void ordenaArestas(Aresta *arestas, int total);
 
-void preencheVetorComDistanciasDireto(Aresta *pool, Ponto *pontos, int contador);
 /**
  * @brief Compara duas arestas com base em seu peso
  * 
@@ -48,13 +33,24 @@ void preencheVetorComDistanciasDireto(Aresta *pool, Ponto *pontos, int contador)
 int comparaAresta(const void* a, const void *b);
 
 /**
- * @brief Preenche o vetor de arestas com as distâncias da matriz
+ * @brief Obtém uma aresta específica do vetor de arestas
+ * 
+ * @param arestas O vetor de arestas
+ * @param i O índice da aresta a ser obtida
+ * @return Aresta* - Ponteiro para a aresta obtida
+ */
+Aresta* getAresta(Aresta *arestas, int i);
+
+
+
+/**
+ * @brief Preenche o vetor de arestas com as distâncias entre os pontos
  * 
  * @param arestas O vetor de arestas a ser preenchido
  * @param pontos O vetor de pontos a serem calculados as distâncias
  * @param contador O número de arestas a ser preenchido
  */
-void preencheVetorComDistancias(Aresta **arestas, Ponto **pontos, int contador);
+void preencheVetorComDistancias(Aresta *arestas, Ponto *pontos, int contador);
 
 
 /**
@@ -87,13 +83,5 @@ double getPesoAresta(Aresta *a);
  * @param a Uma aresta
  */
 void liberaAresta(Aresta *a);
-
-/**
- * @brief Libera a memória alocada para um vetor de arestas
- * 
- * @param a Um vetor de arestas
- * @param n O número de arestas no vetor
- */
-void liberaVetorArestas(Aresta **a, Aresta *piscina);
 
 #endif /* ARESTA_H */

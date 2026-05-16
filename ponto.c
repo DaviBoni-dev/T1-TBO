@@ -28,10 +28,6 @@ Ponto *criaPonto(Ponto *ponto){
 
 }
 
-Ponto *getPonto(Ponto *p, int i){
-    return &p[i];
-}
-
 Ponto *criaVetorPontos(int n){
      Ponto *pontos = (Ponto *) malloc (n * sizeof(Ponto ));
 
@@ -50,6 +46,8 @@ Ponto *criaVetorPontos(int n){
 
     return pontos;
 }
+
+
 
 void adicionaIdPonto(Ponto *p, char *id){
 
@@ -105,6 +103,9 @@ void adicionaValorPonto(Ponto *p, double valor){
 }
 
 
+Ponto *getPonto(Ponto *p, int i){
+    return &p[i];
+}
 
 void liberaPonto(Ponto *p){
     if(p != NULL){

@@ -15,7 +15,7 @@ Grupo *criaGrupo(){
         exit(EXIT_FAILURE);
     }
 
-    g->qtd_max_elementos = 10;
+    g->qtd_max_elementos = QTD_MAX_ELEMENTOS_INICIAL;
     g->idElementos = (char **) malloc (g->qtd_max_elementos * sizeof(char *));
     g->qtd_elementos = 0;
 
@@ -29,47 +29,12 @@ Grupo **criaVetorGrupo(int n){
         fprintf(stderr, "Erro ao alocar memoria para vetor de grupos\n");
         exit(EXIT_FAILURE);
     }
+    
     for(int i = 0; i < n; i++){
         g[i] = criaGrupo();
     }
 
     return g;
-}
-
-void liberaGrupo(Grupo*g){
-    if(g != NULL){
-        for(int i = 0; i < g->qtd_elementos; i++){
-            free(g->idElementos[i]);
-        }
-        free(g->idElementos);
-        free(g);
-    }
-}
-
-void liberaVetorGrupos(Grupo **g, int n){
-    for(int i = 0; i < n; i++){
-        liberaGrupo(g[i]);
-    }
-
-    free(g);
-}
-
-int comparaGrupo(const void* a, const void *b){
-    char *a1 = *(char**) a;
-    char *b1 = *(char**) b;
-
-   return strcmp(a1, b1);
-}
-
-int comparaGruposEntreSi(const void* a, const void *b){
-    Grupo *a2 = *(Grupo **)a;
-    Grupo *b2 = *(Grupo**)b;
-
-    return strcmp(a2->idElementos[0], b2->idElementos[0]);
-}
-
-char **getIdElementosGrupo(Grupo *g){
-    return g->idElementos;
 }
 
 void adicionaElementoGrupo(Grupo *g, char *id){
@@ -93,6 +58,58 @@ void adicionaElementoGrupo(Grupo *g, char *id){
     g->qtd_elementos++;
 }
 
+int comparaGrupo(const void* a, const void *b){
+    char *a1 = *(char**) a;
+    char *b1 = *(char**) b;
+    
+    return strcmp(a1, b1);
+}
+
+int comparaGruposEntreSi(const void* a, const void *b){
+    Grupo *a2 = *(Grupo **)a;
+    Grupo *b2 = *(Grupo**)b;
+
+    return strcmp(a2->idElementos[0], b2->idElementos[0]);
+}
+
+char **getIdElementosGrupo(Grupo *g){
+    return g->idElementos;
+}
+
+int getQtdElementosGrupo(Grupo *g){
+    return g->qtd_elementos;
+}
+
+void ordenaGrupos(Grupo **g, int n){
+    for(int i = 0; i < n; i++){
+        qsort(g[i]->idElementos ,g[i]->qtd_elementos ,sizeof(char*), comparaGrupo);
+    }
+
+    qsort(g, n, sizeof(Grupo *), comparaGruposEntreSi);
+}
+
+void liberaGrupo(Grupo*g){
+    if(g != NULL){
+        for(int i = 0; i < g->qtd_elementos; i++){
+            free(g->idElementos[i]);
+        }
+        free(g->idElementos);
+        free(g);
+    }
+}
+
+void liberaVetorGrupos(Grupo **g, int n){
+    for(int i = 0; i < n; i++){
+        liberaGrupo(g[i]);
+    }
+
+    free(g);
+}
+
+
+
+
+
 void imprimeGrupoArquivo(Grupo *g, FILE *s){
     for(int i = 0; i < g->qtd_elementos; i++){
         fprintf(s, "%s", g->idElementos[i]);
@@ -110,16 +127,4 @@ void imprimeVetorGrupoArquivo(Grupo **g, int n, FILE *s){
             imprimeGrupoArquivo(g[i], s);
         }
     }
-}
-
-int getQtdElementosGrupo(Grupo *g){
-    return g->qtd_elementos;
-}
-
-void ordenaGrupos(Grupo **g, int n){
-    for(int i = 0; i < n; i++){
-        qsort(g[i]->idElementos ,g[i]->qtd_elementos ,sizeof(char*), comparaGrupo);
-    }
-
-    qsort(g, n, sizeof(Grupo *), comparaGruposEntreSi);
 }

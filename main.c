@@ -6,14 +6,13 @@
 #include "aresta.h"
 #include "MST.h"
 #include "agrupador.h"
-#include <time.h>
 
 
 int main(int argc, char *argv[]){
 
     if(argc < 4){
         fprintf(stderr, "Insira os parâmetros corretamente: ./programa <arquivo_entrada> <k> <arquivo_saida>\n");
-        return 1;
+        exit(EXIT_FAILURE);
     }
 
     char *arqEntrada = strdup(argv[1]);
@@ -21,8 +20,8 @@ int main(int argc, char *argv[]){
     int k = atoi(argv[2]);
     FILE *entrada = fopen(arqEntrada, "r");
     if(entrada == NULL){
-        printf("Erro: Nao foi possivel criar o arquivo %s\n", arqEntrada);
-        exit(1);
+        fprintf(stderr, "Erro: Nao foi possivel ler o arquivo %s\n", arqEntrada);
+        exit(EXIT_FAILURE);
     }
 
     Agrupador *agrupador = criaAgrupador(k);
@@ -35,7 +34,7 @@ int main(int argc, char *argv[]){
     FILE *saida = fopen(arqSaida, "w");
     if (saida == NULL) {
         fprintf(stderr,"Erro: Nao foi possivel criar o arquivo %s\n", arqSaida);
-        exit(1); 
+        exit(EXIT_FAILURE); 
     }
     
     imprimeGruposArquivo(agrupador, saida);

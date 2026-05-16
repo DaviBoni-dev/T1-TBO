@@ -1,10 +1,12 @@
-#ifndef A7F48332_2C2B_4771_81FA_A0CE652E6AB2
-#define A7F48332_2C2B_4771_81FA_A0CE652E6AB2
+#ifndef GRUPO_H
+#define GRUPO_H
 
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#define QTD_MAX_ELEMENTOS_INICIAL 10
 
 /**
  * @brief Estrutura de dados para representar um grupo de pontos, onde cada grupo possui um vetor de elementos (índices dos pontos) e um vetor de IDs correspondentes a esses elementos.
@@ -16,7 +18,6 @@ typedef struct grupo Grupo;
  * @return Ponteiro para o grupo criado.
  */
 Grupo *criaGrupo();
-
 
 /** @brief Cria um vetor de grupos.
  * @param n Número de grupos no vetor.
@@ -36,6 +37,14 @@ void adicionaElementoGrupo(Grupo *g, char *id);
  * @return Valor negativo se o primeiro grupo for menor, zero se forem iguais, positivo se o primeiro grupo for maior.
  */
 int comparaGrupo(const void* a, const void *b);
+
+/**
+ * @brief Compara dois grupos entre si.
+ * @param a Ponteiro para o primeiro grupo.
+ * @param b Ponteiro para o segundo grupo.
+ * @return Valor negativo se o primeiro item do primeiro grupo for menor, zero se forem iguais, positivo se o primeiro item do segundo grupo for maior.
+ */
+int comparaGruposEntreSi(const void* a, const void *b);
 
 /** @brief Retorna os IDs dos elementos de um grupo.
  * @param g Ponteiro para o grupo.
@@ -83,12 +92,4 @@ void imprimeGrupoArquivo(Grupo *g, FILE *s);
  */
 void imprimeVetorGrupoArquivo(Grupo **g, int n, FILE *s);
 
-/**
- * @brief Compara dois grupos entre si.
- * @param a Ponteiro para o primeiro grupo.
- * @param b Ponteiro para o segundo grupo.
- * @return Valor negativo se o primeiro item do primeiro grupo for menor, zero se forem iguais, positivo se o primeiro item do segundo grupo for maior.
- */
-int comparaGruposEntreSi(const void* a, const void *b);
-
-#endif /* A7F48332_2C2B_4771_81FA_A0CE652E6AB2 */
+#endif
