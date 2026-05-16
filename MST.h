@@ -29,7 +29,7 @@ void addArestaNaArvoreComPiscina(Aresta *a, NoArvore **arvore, NoArvore *pool, i
  * @param grupos Ponteiro para o vetor de grupos.
  * @param contador_grupo Ponteiro para o contador de grupos.
  */
-void percorreArvore(NoArvore **arvore, int n_pontos, Ponto **pontos, Grupo **grupos, int *contador_grupo);
+void percorreArvore(NoArvore **arvore, int n_pontos, Ponto *pontos, Grupo **grupos, int *contador_grupo);
 
 /** @brief Libera a memória alocada para um vetor de nós de árvore.
  * @param arvore Ponteiro para o vetor de nós de árvore.

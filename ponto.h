@@ -10,14 +10,14 @@ typedef struct ponto Ponto;
  * 
  * @return Ponto* - Ponteiro para o ponto criado
  */
-Ponto *criaPonto();
+Ponto *criaPonto(Ponto *ponto);
 
 /**
  * @brief Cria um vetor de pontos e aloca memória para ele
  * 
  * @return Ponto** - Ponteiro para o vetor de pontos criado
  */
-Ponto **criaVetorPontos(int n);
+Ponto *criaVetorPontos(int n);
 
 /**
  * @brief Adiciona um ID único a um ponto
@@ -42,7 +42,9 @@ char *getIdUnico(Ponto *p);
  * @param n O novo tamanho do vetor
  * @return Ponto** - Ponteiro para o vetor de pontos realocado
  */
-Ponto **realocaVetorPontos(Ponto **p, int n);
+Ponto *realocaVetorPontos(Ponto *p, int n);
+
+Ponto *getPonto(Ponto *p, int i);
 
 /**
  * @brief Calcula a distância euclidiana entre dois pontos
@@ -74,6 +76,6 @@ void liberaPonto(Ponto *p);
  * @param pontos O vetor de pontos a ser liberado
  * @param n O tamanho do vetor
  */
-void liberaVetorPontos(Ponto **pontos, int n);
+void liberaVetorPontos(Ponto *pontos, int n);
 
 #endif /* PONTO_H */

@@ -13,8 +13,7 @@ struct ponto  {
     int tamId;
 };
 
-Ponto *criaPonto(){
-    Ponto *ponto = (Ponto *) malloc (sizeof(Ponto));
+Ponto *criaPonto(Ponto *ponto){
     
     if(ponto == NULL){
         fprintf(stderr, "Erro ao alocar memoria para ponto\n");
@@ -26,11 +25,15 @@ Ponto *criaPonto(){
     ponto->tamValoresTotal = 10;
     ponto->tamValoresPreenchidos = 0;
     ponto->idUnico = NULL;
-    return ponto;
+
 }
 
-Ponto **criaVetorPontos(int n){
-     Ponto **pontos = (Ponto **) malloc (n * sizeof(Ponto *));
+Ponto *getPonto(Ponto *p, int i){
+    return &p[i];
+}
+
+Ponto *criaVetorPontos(int n){
+     Ponto *pontos = (Ponto *) malloc (n * sizeof(Ponto ));
 
     if(pontos == NULL){
         fprintf(stderr, "Erro ao alocar memoria para vetor de pontos\n");
@@ -38,7 +41,11 @@ Ponto **criaVetorPontos(int n){
     }
 
     for(int i = 0; i < n; i++){
-        pontos[i] = criaPonto();
+        pontos[i].valores = (double *) malloc(10 * sizeof(double));
+        pontos[i].m = 0;
+        pontos[i].tamValoresTotal = 10;
+        pontos[i].tamValoresPreenchidos = 0;
+        pontos[i].idUnico = NULL;
     }
 
     return pontos;
@@ -54,8 +61,8 @@ char *getIdUnico(Ponto *p){
     return p->idUnico;
 }
 
-Ponto **realocaVetorPontos(Ponto **p, int n){
-    Ponto **temp = (Ponto **) realloc (p, n * (sizeof(Ponto*)));
+Ponto *realocaVetorPontos(Ponto *p, int n){
+    Ponto *temp = (Ponto *) realloc (p, n * (sizeof(Ponto)));
 
     if(temp == NULL){
         fprintf(stderr, "Erro ao realocar memoria para vetor de pontos\n");
@@ -111,10 +118,11 @@ void liberaPonto(Ponto *p){
     }
 }
 
-void liberaVetorPontos(Ponto **pontos, int n){
+void liberaVetorPontos(Ponto *pontos, int n){
 
     for(int i = 0; i < n; i++){
-        liberaPonto(pontos[i]);
+        free(pontos[i].idUnico);
+        free(pontos[i].valores);
     }
 
     free(pontos);

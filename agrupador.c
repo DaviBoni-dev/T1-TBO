@@ -2,7 +2,7 @@
 
 struct agrupador{
     int k;
-    Ponto **pontos;
+    Ponto *pontos;
     int n_pontos;
     int tam_max_vetor;
     Aresta *piscinaArestas;
@@ -39,18 +39,18 @@ void lePontos(Agrupador *a, FILE *entrada){
             
             a->pontos = realocaVetorPontos(a->pontos, a->tam_max_vetor);
             for(int i = a->n_pontos; i < a->tam_max_vetor; i++){
-                a->pontos[i] = criaPonto();
+                criaPonto(getPonto(a->pontos, i));
             }
         }
         
         char *token = strtok(linha, ",");
-        adicionaIdPonto(a->pontos[a->n_pontos], token);
+        adicionaIdPonto(getPonto(a->pontos, a->n_pontos), token);
         
         while(token != NULL){
             token = strtok(NULL, ",");
             if(token != NULL){
                 double valor = atof(token);
-                adicionaValorPonto(a->pontos[a->n_pontos], valor);
+                adicionaValorPonto(getPonto(a->pontos, a->n_pontos), valor);
                 
             }
         }

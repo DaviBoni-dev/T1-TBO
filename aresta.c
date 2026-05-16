@@ -78,13 +78,13 @@ void preencheVetorComDistancias(Aresta **arestas, Ponto **pontos, int contador){
     }
 }
 
-void preencheVetorComDistanciasDireto(Aresta *pool, Ponto **pontos, int contador){
+void preencheVetorComDistanciasDireto(Aresta *pool, Ponto *pontos, int contador){
     int f = 0;
     for(int i = 0; i < contador; i++){
         for(int j = i + 1; j < contador; j++){
             pool[f].origem = i;
             pool[f].destino = j;
-            pool[f].peso = calculaDistanciaEuclidiana(pontos[i], pontos[j]);
+            pool[f].peso = calculaDistanciaEuclidiana(getPonto(pontos, i), getPonto(pontos, j));
             f++;
         }
     }

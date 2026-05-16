@@ -56,7 +56,7 @@ void addArestaNaArvoreComPiscina(Aresta *a, NoArvore **arvore, NoArvore *pool, i
     arvore[getDestinoAresta(a)] = noA;
 }
 
-void percorreArvore(NoArvore **arvore, int n_pontos, Ponto **pontos, Grupo **grupos, int *contador_grupo){
+void percorreArvore(NoArvore **arvore, int n_pontos, Ponto *pontos, Grupo **grupos, int *contador_grupo){
 
     int *verificador = (int *) calloc (n_pontos, sizeof(int));
     int  *pilha = (int *) malloc (n_pontos * sizeof(int));
@@ -78,7 +78,7 @@ void percorreArvore(NoArvore **arvore, int n_pontos, Ponto **pontos, Grupo **gru
                 }
                 verificador[idAtual] = 1;
 
-                adicionaElementoGrupo(grupos[*contador_grupo], getIdUnico(pontos[idAtual]));
+                adicionaElementoGrupo(grupos[*contador_grupo], getIdUnico(getPonto(pontos, idAtual)));
 
                 NoArvore *vizinho = arvore[idAtual];
                 while(vizinho != NULL){

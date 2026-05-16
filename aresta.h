@@ -37,8 +37,7 @@ Aresta* getAresta(Aresta *arestas, int i);
  */
 void ordenaArestas(Aresta **arestas, int total);
 
-void preencheVetorComDistanciasDireto(Aresta *pool, Ponto **pontos, int contador);
-
+void preencheVetorComDistanciasDireto(Aresta *pool, Ponto *pontos, int contador);
 /**
  * @brief Compara duas arestas com base em seu peso
  * 
