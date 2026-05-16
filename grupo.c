@@ -9,6 +9,12 @@ struct grupo {
 
 Grupo *criaGrupo(){
     Grupo *g = (Grupo *) malloc (sizeof(Grupo));
+
+    if(g == NULL){
+        fprintf(stderr, "Erro ao alocar memoria para grupo\n");
+        exit(EXIT_FAILURE);
+    }
+
     g->qtd_max_elementos = 10;
     g->idElementos = (char **) malloc (g->qtd_max_elementos * sizeof(char *));
     g->qtd_elementos = 0;
@@ -19,6 +25,10 @@ Grupo *criaGrupo(){
 Grupo **criaVetorGrupo(int n){
     Grupo **g = (Grupo **) malloc (n * sizeof(Grupo *));
     
+    if(g == NULL){
+        fprintf(stderr, "Erro ao alocar memoria para vetor de grupos\n");
+        exit(EXIT_FAILURE);
+    }
     for(int i = 0; i < n; i++){
         g[i] = criaGrupo();
     }

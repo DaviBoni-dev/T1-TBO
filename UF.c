@@ -13,6 +13,12 @@ struct uf {
 
 UF *UF_init(int N) {
     UF *my_uf = (UF*) malloc (sizeof(UF)); 
+    
+    if(my_uf == NULL){
+        fprintf(stderr, "Erro ao alocar memoria para UF\n");
+        exit(EXIT_FAILURE);
+    }
+    
     my_uf->count = N;
     my_uf->id = (int *) malloc (N * sizeof(int));
     for (int i = 0; i < N; i++) {

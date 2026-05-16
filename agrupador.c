@@ -6,7 +6,7 @@ struct agrupador{
     int n_pontos;
     int tam_max_vetor;
     Aresta *piscinaArestas;
-    Aresta **arestas;
+    //Aresta **arestas;
     int total_arestas;
     UF *uf;
     NoArvore *piscinaNosArvore;
@@ -65,10 +65,13 @@ void preencheOrdenaArestas(Agrupador *a){
     
     a->total_arestas = (a->n_pontos * (a->n_pontos - 1)) / 2;
     a->piscinaArestas = criaPiscinaAresta(a->total_arestas);
-    a->arestas = criaVetorArestas(a->total_arestas, a->piscinaArestas);
+    //a->arestas = criaVetorArestas(a->total_arestas, a->piscinaArestas);
     
-    preencheVetorComDistancias(a->arestas, a->pontos, a->n_pontos);
-    ordenaArestas(a->arestas, a->total_arestas);
+    //preencheVetorComDistancias(a->arestas, a->pontos, a->n_pontos);
+    //ordenaArestas(a->arestas, a->total_arestas);
+
+    preencheVetorComDistanciasDireto(a->piscinaArestas, a->pontos, a->n_pontos);
+    ordenaArestasDireta(a->piscinaArestas, a->total_arestas);
     
 }
 
@@ -84,7 +87,7 @@ void criaMST(Agrupador *a){
     int arestasAdicionadas = 0;
 
      for(int i = 0; i < a->total_arestas; i++){
-        Aresta *atual = a->arestas[i];
+        Aresta *atual = getAresta(a->piscinaArestas, i);
 
         if(UF_find(a->uf,getOrigemAresta(atual)) != UF_find(a->uf, getDestinoAresta(atual))){
             addArestaNaArvoreComPiscina(atual, a->arvore, a->piscinaNosArvore, &contadorArvore, max_nos);
@@ -114,7 +117,7 @@ void imprimeGruposArquivo(Agrupador *a, FILE *saida){
 void liberaAgrupador(Agrupador *a){
     liberaVetorPontos(a->pontos, a->tam_max_vetor);
     liberaVetorGrupos(a->grupos, a->k);
-    liberaVetorArestas(a->arestas, a->piscinaArestas);
+    free(a->piscinaArestas);
     liberaVetorArvores(a->arvore, a->piscinaNosArvore);
     UF_destroy(a->uf);
     free(a);

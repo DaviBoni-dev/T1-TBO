@@ -12,16 +12,23 @@ struct noarvore {
 
 NoArvore **criaVetorArvores(int n, int max_nos){
     NoArvore **arvore = (NoArvore **) calloc (n, sizeof(NoArvore*));
-/*
-        for(int i = 0; i < max_nos; i++){
-            arvore[i] = (NoArvore *) malloc (sizeof(NoArvore));
-        }
-*/
+
+    if(arvore == NULL){
+        fprintf(stderr, "Erro ao alocar memoria para vetor de arvores\n");
+        exit(EXIT_FAILURE);
+    }
+
     return arvore;
 }
 
 NoArvore *criaNoArvore(int n){
     NoArvore *no = (NoArvore *) calloc (n,  sizeof(NoArvore));
+
+    if(no == NULL){
+        fprintf(stderr, "Erro ao alocar memoria para no de arvore\n");
+        exit(EXIT_FAILURE);
+    }
+    
     no->vizinho = NULL;
     return no;
 }

@@ -23,6 +23,12 @@ Aresta *criaPiscinaAresta(int n);
  */
 Aresta **criaVetorArestas(int n, Aresta *pool);
 
+int comparaArestaSimples(const void *a, const void *b);
+
+void ordenaArestasDireta(Aresta *arestas, int total);
+
+Aresta* getAresta(Aresta *arestas, int i);
+
 /**
  * @brief Ordena o vetor de arestas com base em seu peso
  * 
@@ -30,6 +36,8 @@ Aresta **criaVetorArestas(int n, Aresta *pool);
  * @param total O número total de arestas no vetor
  */
 void ordenaArestas(Aresta **arestas, int total);
+
+void preencheVetorComDistanciasDireto(Aresta *pool, Ponto **pontos, int contador);
 
 /**
  * @brief Compara duas arestas com base em seu peso

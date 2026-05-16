@@ -15,6 +15,12 @@ struct ponto  {
 
 Ponto *criaPonto(){
     Ponto *ponto = (Ponto *) malloc (sizeof(Ponto));
+    
+    if(ponto == NULL){
+        fprintf(stderr, "Erro ao alocar memoria para ponto\n");
+        exit(EXIT_FAILURE);
+    }
+    
     ponto->valores = (double *) malloc (10 * sizeof(double));
     ponto->m = 0;
     ponto->tamValoresTotal = 10;
@@ -25,6 +31,11 @@ Ponto *criaPonto(){
 
 Ponto **criaVetorPontos(int n){
      Ponto **pontos = (Ponto **) malloc (n * sizeof(Ponto *));
+
+    if(pontos == NULL){
+        fprintf(stderr, "Erro ao alocar memoria para vetor de pontos\n");
+        exit(EXIT_FAILURE);
+    }
 
     for(int i = 0; i < n; i++){
         pontos[i] = criaPonto();
@@ -46,14 +57,12 @@ char *getIdUnico(Ponto *p){
 Ponto **realocaVetorPontos(Ponto **p, int n){
     Ponto **temp = (Ponto **) realloc (p, n * (sizeof(Ponto*)));
 
-    if(temp != NULL){
-        return temp;
+    if(temp == NULL){
+        fprintf(stderr, "Erro ao realocar memoria para vetor de pontos\n");
+        exit(EXIT_FAILURE);
     }
-    else{
-        printf("Não foi possível alocar memória para o número total de pontos\n");
-        exit(0);
-        return p;
-    }
+
+    return temp;
 
 }
 
@@ -78,8 +87,8 @@ void adicionaValorPonto(Ponto *p, double valor){
             p->tamValoresTotal *= 2;
             p->valores = temp;
         } else {          
-            printf("Erro: Falta de memória ao adicionar valor!\n");
-            return;
+            fprintf(stderr, "Erro ao realocar memoria para valores do ponto\n");
+            exit(EXIT_FAILURE);
         }
     }
 
